@@ -1,0 +1,66 @@
+{
+  "user_1766379265593": {
+    "calculations": [
+      {
+        "type": "CII",
+        "input": {
+          "dwt": 93414,
+          "distance": 50000,
+          "fuelList": [
+            {
+              "class": "Fossil",
+              "type": "LNG Otto (slow speed)",
+              "amount": 10000,
+              "scope": 1
+            }
+          ],
+          "shipType": "General Cargo",
+          "year": "2024",
+          "reductionRate": 7
+        },
+        "result": {
+          "attainedCII": "5.89",
+          "requiredCII": "6.41",
+          "reductionRate": "7%",
+          "ratio": "0.92",
+          "rating": "B",
+          "totalCO2": "27500.0"
+        },
+        "timestamp": 1766379399373
+      },
+      {
+        "type": "CII",
+        "input": {
+          "dwt": 93414,
+          "distance": 50000,
+          "fuelList": [
+            {
+              "class": "Fossil",
+              "type": "VLSFO",
+              "amount": 300,
+              "scope": 1
+            },
+            {
+              "class": "Fossil",
+              "type": "LNG Otto (slow speed)",
+              "amount": 10000,
+              "scope": 1
+            }
+          ],
+          "shipType": "Gas Carrier",
+          "year": "2024",
+          "reductionRate": 7
+        },
+        "result": {
+          "attainedCII": "6.09",
+          "requiredCII": "5.02",
+          "reductionRate": "7%",
+          "ratio": "1.21",
+          "rating": "D",
+          "totalCO2": "28461.8"
+        },
+        "timestamp": 1766379364340
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "ETS": {
+    "Trader A": {
+      "name": "사과",
+      "email": "sjjoo@hls.co.kr",
+      "company": "A-company",
+      "phone": ""
+    },
+    "Trader B": {
+      "name": "행복",
+      "email": "newdynamo77@daum.net",
+      "company": "B-Company",
+      "phone": ""
+    },
+    "Trader C": {
+      "name": "",
+      "email": "",
+      "company": "",
+      "phone": ""
+    }
+  },
+  "FuelEU": {
+    "AA Trader": {
+      "name": "사과 1",
+      "email": "sjjoo@hls.com",
+      "company": "AA-Company",
+      "phone": "1231231311"
+    },
+    "BB Trader": {
+      "name": "사과2",
+      "email": "newdynamo77@daum.net",
+      "company": "BB-Company",
+      "phone": ""
+    },
+    "CC Trader": {
+      "name": "",
+      "email": "",
+      "company": "",
+      "phone": ""
+    }
+  }
+}

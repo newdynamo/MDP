@@ -1,0 +1,178 @@
+{
+  "Fossil": [
+    {
+      "name": "ULSFO",
+      "cf": 3.114
+    },
+    {
+      "name": "VLSFO",
+      "cf": 3.206
+    },
+    {
+      "name": "HFO",
+      "cf": 3.114
+    },
+    {
+      "name": "LFO",
+      "cf": 3.151
+    },
+    {
+      "name": "MDO/MGO",
+      "cf": 3.206
+    },
+    {
+      "name": "LNG Otto (medium speed)",
+      "cf": 2.75
+    },
+    {
+      "name": "LNG Otto (slow speed)",
+      "cf": 2.75
+    },
+    {
+      "name": "LNG Diesel (slow speed)",
+      "cf": 2.75
+    },
+    {
+      "name": "LNG (LBSI)",
+      "cf": 2.75
+    },
+    {
+      "name": "LNG (Steam Turbines and boilers)",
+      "cf": 2.75
+    },
+    {
+      "name": "LPG(Buthane)",
+      "cf": 3.03
+    },
+    {
+      "name": "LPG(Propane)",
+      "cf": 3
+    },
+    {
+      "name": "H2 (Fuel cells)",
+      "cf": 0
+    },
+    {
+      "name": "H2 (ICE)",
+      "cf": 0
+    },
+    {
+      "name": "NH3 (Fuel Cells)",
+      "cf": 0
+    },
+    {
+      "name": "NH3 (ICE)",
+      "cf": 0
+    },
+    {
+      "name": "Methanol",
+      "cf": 1.375
+    }
+  ],
+  "Biofuels": [
+    {
+      "name": "Ethanol",
+      "cf": 1.913
+    },
+    {
+      "name": "Bio-diesel",
+      "cf": 2.834
+    },
+    {
+      "name": "HVO",
+      "cf": 3.115
+    },
+    {
+      "name": "Bio-LNG Otto (medium speed)",
+      "cf": 2.75
+    },
+    {
+      "name": "Bio-LNG Otto (slow speed)",
+      "cf": 2.75
+    },
+    {
+      "name": "Bio-LNG Diesel (slow speed)",
+      "cf": 2.75
+    },
+    {
+      "name": "Bio-LNG (LBSI)",
+      "cf": 2.75
+    },
+    {
+      "name": "Bio-LNG (Steam Turbines and boilers)",
+      "cf": 2.75
+    },
+    {
+      "name": "Bio-methanol",
+      "cf": 1.375
+    },
+    {
+      "name": "Other Production Pathways",
+      "cf": 3.115
+    },
+    {
+      "name": "Bio-H2 (Fuel cells)",
+      "cf": 0
+    },
+    {
+      "name": "Bio-H2 (ICE)",
+      "cf": 0
+    }
+  ],
+  "RFNBO": [
+    {
+      "name": "e-diesel",
+      "cf": 3.206
+    },
+    {
+      "name": "e-methanol",
+      "cf": 1.375
+    },
+    {
+      "name": "e-LNG Otto (medium speed)",
+      "cf": 2.75
+    },
+    {
+      "name": "e-LNG Otto (slow speed)",
+      "cf": 2.75
+    },
+    {
+      "name": "e-LNG Diesel (slow speed)",
+      "cf": 2.75
+    },
+    {
+      "name": "e-LNG (LBSI)",
+      "cf": 2.75
+    },
+    {
+      "name": "e-H2 (Fuel cells)",
+      "cf": 0
+    },
+    {
+      "name": "e-H2 (ICE)",
+      "cf": 0
+    },
+    {
+      "name": "e-NH3 (Fuel Cells)",
+      "cf": 0
+    },
+    {
+      "name": "e-NH3 (ICE)",
+      "cf": 0
+    },
+    {
+      "name": "e-LPG",
+      "cf": 3.206
+    },
+    {
+      "name": "e-DME",
+      "cf": 3.206
+    }
+  ],
+  "Others": [
+    {
+      "name": "Electricity",
+      "cf": 0
+    }
+  ]
+}

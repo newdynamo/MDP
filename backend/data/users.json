@@ -1,0 +1,127 @@
+[
+  {
+    "id": "admin_cf",
+    "role": "ADMIN",
+    "id_custom": "cfadmin",
+    "email": "cfadmin@cofleeter.com",
+    "password": "1234",
+    "name": "Super Admin",
+    "company": "Co-Fleeter",
+    "permissions": [
+      "VIEW_ADMIN",
+      "MANAGE_USERS",
+      "MANAGE_FLEET",
+      "VIEW_CALCULATOR",
+      "VIEW_MARKET",
+      "TRADE",
+      "VIEW_REPORTS"
+    ]
+  },
+  {
+    "id": "user_1765886142427",
+    "role": "USER",
+    "email": "persist_test@test.com",
+    "password": "123",
+    "name": "Persist Test",
+    "company": "TestCo",
+    "permissions": [
+      "MANAGE_FLEET",
+      "VIEW_CALCULATOR",
+      "VIEW_MARKET",
+      "VIEW_REPORTS"
+    ]
+  },
+  {
+    "id": "user_1765886209200",
+    "role": "USER",
+    "email": "persist_1765886209100@test.com",
+    "password": "123",
+    "name": "Persist Test",
+    "company": "TestCo",
+    "permissions": [
+      "MANAGE_FLEET",
+      "VIEW_CALCULATOR",
+      "VIEW_MARKET",
+      "VIEW_REPORTS"
+    ]
+  },
+  {
+    "id": "user_1765888655541",
+    "role": "USER",
+    "name": "JOO SUNGJUN",
+    "company": "HYUNDAI LNG SHIPPING CO., LTD.",
+    "email": "newdynamo@gmail.com",
+    "password": "1234",
+    "permissions": [
+      "MANAGE_FLEET",
+      "VIEW_CALCULATOR",
+      "VIEW_MARKET",
+      "VIEW_REPORTS"
+    ]
+  },
+  {
+    "id": "trader_a",
+    "role": "TRADER",
+    "email": "atrader@cofleeter.com",
+    "password": "1234",
+    "name": "A Trader",
+    "company": "Co-Fleeter Traders",
+    "permissions": [
+      "VIEW_MARKET",
+      "TRADE"
+    ]
+  },
+  {
+    "id": "trader_b",
+    "role": "TRADER",
+    "email": "btrader@cofleeter.com",
+    "password": "1234",
+    "name": "B Trader",
+    "company": "Co-Fleeter Traders",
+    "permissions": [
+      "VIEW_MARKET",
+      "TRADE"
+    ]
+  },
+  {
+    "id": "trader_c",
+    "role": "TRADER",
+    "email": "ctrader@cofleeter.com",
+    "password": "1234",
+    "name": "C Trader",
+    "company": "Co-Fleeter Traders",
+    "permissions": [
+      "VIEW_MARKET",
+      "TRADE"
+    ]
+  },
+  {
+    "id": "user_1766296671481",
+    "role": "USER",
+    "permissions": [
+      "MANAGE_FLEET",
+      "VIEW_CALCULATOR",
+      "VIEW_MARKET",
+      "VIEW_REPORTS"
+    ],
+    "name": "주성준",
+    "company": "현대엘엔지쉽핑",
+    "email": "sjjoo@hls.co.kr",
+    "password": "1234"
+  },
+  {
+    "id": "user_1766379265593",
+    "role": "USER",
+    "permissions": [
+      "MANAGE_FLEET",
+      "VIEW_CALCULATOR",
+      "VIEW_MARKET",
+      "VIEW_REPORTS"
+    ],
+    "name": "junsunhan",
+    "company": "HLS",
+    "email": "jshan@hls.co.kr",
+    "phone": "821092964890",
+    "password": "1234"
+  }
+]

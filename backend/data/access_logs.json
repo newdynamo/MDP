@@ -1,0 +1,758 @@
+[
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766235426764,
+    "ip": "::ffff:127.0.0.1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766235586860,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766235757721,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_b",
+    "email": "btrader@cofleeter.com",
+    "timestamp": 1766235805663,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_c",
+    "email": "ctrader@cofleeter.com",
+    "timestamp": 1766235835767,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766235902066,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766235976091,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766286649166,
+    "ip": "::ffff:127.0.0.1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766286915182,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766287659559,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_b",
+    "email": "btrader@cofleeter.com",
+    "timestamp": 1766287688922,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_c",
+    "email": "ctrader@cofleeter.com",
+    "timestamp": 1766287714176,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766287763020,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766288154595,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_b",
+    "email": "btrader@cofleeter.com",
+    "timestamp": 1766288180268,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_c",
+    "email": "ctrader@cofleeter.com",
+    "timestamp": 1766288201775,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766288492736,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766288516445,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766288915453,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766288934008,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766289068277,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766289298491,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766289485844,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766289502847,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766289538792,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766289554331,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_b",
+    "email": "btrader@cofleeter.com",
+    "timestamp": 1766289563075,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_c",
+    "email": "ctrader@cofleeter.com",
+    "timestamp": 1766289584900,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766289614754,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766289657913,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766289854687,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766289879310,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_b",
+    "email": "btrader@cofleeter.com",
+    "timestamp": 1766289893636,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_c",
+    "email": "ctrader@cofleeter.com",
+    "timestamp": 1766289907422,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766289922305,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766289960932,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_b",
+    "email": "btrader@cofleeter.com",
+    "timestamp": 1766289976988,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766289992573,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766290180187,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766290292409,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766290456481,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766290479967,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_b",
+    "email": "btrader@cofleeter.com",
+    "timestamp": 1766290526718,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766290845186,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766290865541,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766290882469,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766290904138,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766290941293,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766290986803,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766291426913,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766291449197,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766291483137,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766291488104,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766291696941,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766293888962,
+    "ip": "::ffff:127.0.0.1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766293902686,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766294054235,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766295382432,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766295397601,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766295821084,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766296086070,
+    "ip": "::ffff:127.0.0.1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766296145478,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766296484951,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766296698999,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766296746416,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766296928908,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766297044394,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766297080227,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766297368291,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766298073371,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766298856515,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766299007667,
+    "ip": "::ffff:127.0.0.1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766299161700,
+    "ip": "::ffff:127.0.0.1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766299601443,
+    "ip": "::ffff:127.0.0.1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766299634876,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766299660862,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766299755517,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766299828676,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766299931047,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766301101408,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766301215832,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766301725551,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766301751300,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766302224836,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766302359836,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_b",
+    "email": "btrader@cofleeter.com",
+    "timestamp": 1766302412897,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766302462649,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766311512822,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_b",
+    "email": "btrader@cofleeter.com",
+    "timestamp": 1766311558989,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766311612404,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766311675994,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766312878242,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766312912715,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766312963065,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766312991876,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766313601948,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766314214622,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766368670164,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766368919862,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766369205580,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766369369932,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766370118200,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766370213157,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766370260284,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766373839324,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766374440991,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766374688852,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766375096365,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766375414358,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766376406583,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766376450789,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766377395115,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766378191280,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766378217592,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1765888655541",
+    "email": "newdynamo@gmail.com",
+    "timestamp": 1766378714131,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1766379271890,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766379451205,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1766379474067,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1766379505579,
+    "ip": "::1"
+  },
+  {
+    "userId": "trader_a",
+    "email": "atrader@cofleeter.com",
+    "timestamp": 1766379537893,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1766379547414,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766379577479,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1766379612937,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766296671481",
+    "email": "sjjoo@hls.co.kr",
+    "timestamp": 1766379669028,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1766379680730,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1766387929056,
+    "ip": "::1"
+  }
+]

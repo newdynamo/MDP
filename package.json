@@ -1,0 +1,19 @@
+{
+    "name": "co-fleeter-prototype",
+    "version": "1.0.0",
+    "description": "Co-Fleeter Maritime SaaS Prototype",
+    "scripts": {
+        "start": "concurrently \"node backend/server.js\" \"npm run dev\"",
+        "dev": "lite-server"
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.1",
+        "http-proxy-middleware": "^3.0.5",
+        "lite-server": "^2.6.1"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "nodemailer": "^7.0.11"
+    }
+}

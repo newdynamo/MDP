@@ -1,0 +1,55 @@
+{
+  "user_1765886142427": [],
+  "user_1765886209200": [
+    {
+      "id": "imo_9999999",
+      "cii_rating": "N/A",
+      "co2_ytd": 0,
+      "name": "Persistent Ship",
+      "type": "Tanker",
+      "dwt": 30000,
+      "year": 2020
+    }
+  ],
+  "user_1765888655541": [
+    {
+      "id": "999222",
+      "cii_rating": "A",
+      "co2_ytd": 311.4,
+      "name": "HAPPY005",
+      "type": "Bulk Carrier",
+      "dwt": 50000,
+      "year": 2025
+    },
+    {
+      "id": "912234",
+      "cii_rating": "N/A",
+      "co2_ytd": 0,
+      "name": "happy02",
+      "type": "Bulk Carrier",
+      "dwt": 50000,
+      "year": 2025
+    },
+    {
+      "cii_rating": "N/A",
+      "co2_ytd": 0,
+      "name": "happy03",
+      "id": "911234",
+      "type": "lng",
+      "dwt": 10000,
+      "year": 2025
+    }
+  ],
+  "user_1766296671481": [],
+  "user_1766379265593": [
+    {
+      "id": "999999",
+      "cii_rating": "N/A",
+      "co2_ytd": 0,
+      "name": "PSD",
+      "type": "LNG carrier ( >= 100,000 DWT)",
+      "dwt": 93414,
+      "year": 2025
+    }
+  ]
+}

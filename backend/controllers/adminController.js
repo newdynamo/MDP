@@ -1,0 +1,105 @@
+const { db, save } = require('../models/store');
+const dataService = require('../services/dataService');
+const emailService = require('../services/emailService');
+const logService = require('../services/logService');
+
+
+exports.getUsers = (req, res) => {
+    const safeUsers = db.users.map(u => {
+        const { password, ...rest } = u;
+        return rest;
+    });
+    res.json({ success: true, users: safeUsers });
+};
+
+exports.updatePermissions = (req, res) => {
+    const { targetUserId, permissions } = req.body;
+    const user = db.users.find(u => u.id === targetUserId);
+    if (user) {
+        user.permissions = permissions;
+        save.users();
+        res.json({ success: true });
+    } else {
+        res.status(404).json({ success: false });
+    }
+};
+
+exports.resetPassword = (req, res) => {
+    const { targetUserId } = req.body;
+    const user = db.users.find(u => u.id === targetUserId);
+    if (user) {
+        user.password = 'cofleeter1234!';
+        save.users();
+        res.json({ success: true, message: 'Password reset' });
+    } else {
+        res.status(404).json({ success: false });
+    }
+};
+
+exports.getEmailConfig = (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    const safe = { ...db.emailConfig };
+    if (safe.auth && safe.auth.pass) safe.auth.pass = '********';
+    res.json({ success: true, config: safe });
+};
+
+exports.updateEmailConfig = (req, res) => {
+    const { user, pass } = req.body;
+    emailService.updateConfig(user, pass);
+    res.json({ success: true });
+};
+
+exports.getTraderContacts = (req, res) => {
+    res.json(db.traderContacts);
+};
+
+exports.updateTraderContacts = (req, res) => {
+    const contacts = req.body;
+    if (contacts) {
+        db.traderContacts = contacts;
+        save.traderContacts();
+        res.json({ success: true });
+    } else {
+        res.status(400).json({ success: false });
+    }
+};
+
+exports.getStats = (req, res) => {
+    const { period, date, startDate, endDate } = req.query;
+    const stats = logService.getVisitorStats(period, date, startDate, endDate);
+    res.json(stats);
+};
+
+exports.getManualEua = (req, res) => {
+    const sorted = [...db.euaManualData].sort((a, b) => new Date(b.date) - new Date(a.date));
+    res.json(sorted);
+};
+
+exports.updateManualEua = (req, res) => {
+    const { action, date, price } = req.body;
+    if (!action || !date) return res.status(400).json({ success: false });
+
+    if (action === 'add') {
+        const p = parseFloat(price);
+        if (isNaN(p)) return res.status(400).json({ success: false });
+        db.euaManualData = db.euaManualData.filter(d => d.date !== date);
+        db.euaManualData.push({ date, price: p });
+        save.euaManual();
+        res.json({ success: true });
+    } else if (action === 'delete') {
+        db.euaManualData = db.euaManualData.filter(d => d.date !== date);
+        save.euaManual();
+        res.json({ success: true });
+    } else {
+        res.status(400).json({ success: false });
+    }
+};
+
+exports.refreshEuaSheet = async (req, res) => {
+    try {
+        const count = await dataService.syncEUASheetData();
+        res.json({ success: true, message: `Synced ${count} records.`, count });
+    } catch (e) {
+        res.status(500).json({ success: false, message: e.message });
+    }
+};

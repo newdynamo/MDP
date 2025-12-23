@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Co-Fleeter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="login-container">
+        <!-- Animated Background Shapes -->
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+
+        <div class="login-box card text-center">
+            <div class="mb-4">
+                <h1 class="brand-title">Co-Fleeter</h1>
+                <p class="text-muted">Maritime Decarbonization Platform v1.0</p>
+            </div>
+
+            <div id="error-message" class="alert alert-error hidden">
+                Invalid credentials. Please try again.
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form">
+                <div class="input-group">
+                    <label class="input-label" for="email">Email Address</label>
+                    <input type="email" id="email" class="input-field" placeholder="name@company.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="password">Password</label>
+                    <input type="password" id="password" class="input-field" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-full mt-4">
+                    Sign In to Portal
+                </button>
+
+                <div class="mt-4 text-center">
+                    <a href="#" id="show-register" class="text-sm text-primary hover:text-white">New here? Create an
+                        account</a>
+                </div>
+
+
+            </form>
+
+            <!-- Registration Form (Hidden) -->
+            <form id="register-form" class="hidden">
+                <div class="input-group">
+                    <label class="input-label" for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" class="input-field" placeholder="John Doe" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="reg-company">Company Name</label>
+                    <input type="text" id="reg-company" class="input-field" placeholder="Shipping Co." required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" class="input-field" placeholder="name@company.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="reg-phone">Phone Number</label>
+                    <input type="text" id="reg-phone" class="input-field" placeholder="+1 234 567 890">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="reg-password">Password</label>
+                    <input type="password" id="reg-password" class="input-field" placeholder="••••••••" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="reg-password-confirm">Confirm Password</label>
+                    <input type="password" id="reg-password-confirm" class="input-field" placeholder="••••••••"
+                        required>
+                </div>
+
+                <button type="submit" class="btn btn-success w-full mt-4">
+                    Create Account
+                </button>
+
+                <div class="mt-4 text-center">
+                    <a href="#" id="show-login" class="text-sm text-primary hover:text-white">Already have an account?
+                        Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/toast.js"></script>
+    <script src="js/loading.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Check if already logged in
+        auth.redirectIfLoggedIn();
+
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const errorMsg = document.getElementById('error-message');
+
+        // Toggle Forms
+        document.getElementById('show-register').addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+            errorMsg.classList.add('hidden');
+        });
+
+        document.getElementById('show-login').addEventListener('click', (e) => {
+            e.preventDefault();
+            registerForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+            errorMsg.classList.add('hidden');
+        });
+
+        // Setup form validation
+        const emailField = document.getElementById('email');
+        const passwordField = document.getElementById('password');
+        const regEmailField = document.getElementById('reg-email');
+        const regPasswordField = document.getElementById('reg-password');
+        const regPasswordConfirmField = document.getElementById('reg-password-confirm');
+
+        // Login form validation
+        validator.attachValidation(emailField, [
+            { rule: 'required' },
+            { rule: 'email' }
+        ]);
+        validator.attachValidation(passwordField, [
+            { rule: 'required' },
+            { rule: 'minLength', params: [4] }
+        ]);
+
+        // Register form validation
+        validator.attachValidation(document.getElementById('reg-name'), [
+            { rule: 'required' },
+            { rule: 'minLength', params: [2] }
+        ]);
+        validator.attachValidation(document.getElementById('reg-company'), [
+            { rule: 'required' }
+        ]);
+        validator.attachValidation(regEmailField, [
+            { rule: 'required' },
+            { rule: 'email' }
+        ]);
+        // Phone is optional but good to have minimal validation if present? keeping it optional for now.
+
+        validator.attachValidation(regPasswordField, [
+            { rule: 'required' },
+            { rule: 'minLength', params: [4] }
+        ]);
+        validator.attachValidation(regPasswordConfirmField, [
+            { rule: 'required' }
+        ]);
+
+        // Login Handler
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const email = emailField.value;
+            const password = passwordField.value;
+
+            // Validate before submit
+            const emailValid = validator.validateField(emailField, [
+                { rule: 'required' },
+                { rule: 'email' }
+            ]);
+            const passwordValid = validator.validateField(passwordField, [
+                { rule: 'required' },
+                { rule: 'minLength', params: [4] }
+            ]);
+
+            if (!emailValid.valid || !passwordValid.valid) {
+                toast.error('Please fix the errors before submitting');
+                return;
+            }
+
+            // Use loading wrapper for button
+            await loading.wrapButton(submitBtn, async () => {
+                const result = await auth.login(email, password);
+
+                if (result.success) {
+                    toast.success('Login successful! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 500);
+                } else {
+                    toast.error(result.message || 'Login failed');
+                }
+            });
+        });
+
+        // Register Handler
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const name = document.getElementById('reg-name').value;
+            const company = document.getElementById('reg-company').value;
+            const email = regEmailField.value;
+            const phone = document.getElementById('reg-phone').value;
+            const password = regPasswordField.value;
+            const confirm = regPasswordConfirmField.value;
+
+            // Check password match
+            if (password !== confirm) {
+                toast.error('Passwords do not match');
+                validator.showFeedback(regPasswordConfirmField, false, 'Passwords do not match');
+                return;
+            }
+
+            // Validate form
+            const isValid = validator.validateForm(registerForm, {
+                'reg-name': [{ rule: 'required' }, { rule: 'minLength', params: [2] }],
+                'reg-company': [{ rule: 'required' }],
+                'reg-email': [{ rule: 'required' }, { rule: 'email' }],
+                'reg-password': [{ rule: 'required' }, { rule: 'minLength', params: [4] }],
+                'reg-password-confirm': [{ rule: 'required' }]
+            });
+
+            if (!isValid) {
+                toast.error('Please fix the errors before submitting');
+                return;
+            }
+
+            await loading.wrapButton(submitBtn, async () => {
+                const result = await auth.register({
+                    name, company, email, phone, password
+                });
+
+                if (result.success) {
+                    toast.success('Account created successfully! Please sign in.');
+
+                    // Switch to login view
+                    registerForm.classList.add('hidden');
+                    loginForm.classList.remove('hidden');
+
+                    // Pre-fill email
+                    emailField.value = email;
+                } else {
+                    toast.error(result.message || 'Registration failed');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

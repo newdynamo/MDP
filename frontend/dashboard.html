@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Co-Fleeter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="dashboard-grid">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="mb-8 p-2">
+                <h1 class="font-bold text-lg" style="letter-spacing: -0.5px;">Co-Fleeter</h1>
+                <div class="text-xs text-muted">Enterprise Edition v1.0</div>
+            </div>
+
+            <nav id="sidebar-nav">
+                <a href="#" class="nav-link active" data-route="dashboard">
+                    <span>📊</span> Dashboard
+                </a>
+                <a href="#" class="nav-link" data-route="fleet">
+                    <span>🚢</span> Fleet
+                </a>
+                <a href="#" class="nav-link" data-route="trading-ets">
+                    <span>📈</span> Trading (ETS)
+                </a>
+                <a href="#" class="nav-link" data-route="trading-fueleu">
+                    <span>⚡</span> Trading (FuelEU)
+                </a>
+                <a href="#" class="nav-link" data-route="trading-history">
+                    <span>📊</span> Trading History
+                </a>
+                <a href="#" class="nav-link" data-route="calculator">
+                    <span>🧮</span> Calculator
+                </a>
+                <a href="#" class="nav-link" data-route="reports">
+                    <span>📑</span> Reports
+                </a>
+                <a href="#" class="nav-link" data-route="mypage"
+                    style="margin-top: auto; border-top: 1px solid var(--color-border);">
+                    <span>👤</span> My Page
+                </a>
+                <a href="#" class="nav-link" data-route="admin">
+                    <span>⚙️</span> Admin
+                </a>
+            </nav>
+
+            <div style="margin-top: auto;">
+                <div class="card p-3 mb-3" style="background: rgba(255,255,255,0.05); border: none;">
+                    <div id="user-display" class="font-bold text-sm">User</div>
+                    <div id="company-display" class="text-xs text-muted">Company</div>
+                </div>
+                <button id="logout-btn" class="btn btn-outline w-full text-sm">
+                    Log Out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="content-area">
+            <!-- Dynamic Content Injected Here by app.js -->
+        </main>
+    </div>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- jsPDF CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- SheetJS (xlsx) CDN -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+    <!-- ExcelJS CDN (For Advanced Features like Dropdowns/Validation) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
+    <!-- Load Scripts in Order -->
+    <script src="js/toast.js"></script>
+    <script src="js/loading.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/performance.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/calculator.js?v=1.0"></script>
+    <script src="js/trading.js"></script>
+    <script src="js/pooling.js"></script>
+    <script src="js/trading-history.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

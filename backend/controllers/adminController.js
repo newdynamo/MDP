@@ -103,3 +103,48 @@ exports.refreshEuaSheet = async (req, res) => {
         res.status(500).json({ success: false, message: e.message });
     }
 };
+
+exports.exportData = (req, res) => {
+    const filename = `cofleeter_backup_${new Date().toISOString().slice(0, 10)}.json`;
+    res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
+    res.json(db);
+};
+
+exports.importData = (req, res) => {
+    const data = req.body;
+    if (!data || typeof data !== 'object') {
+        return res.status(400).json({ success: false, message: 'Invalid data' });
+    }
+
+    try {
+        if (data.users) db.users = data.users;
+        if (data.fleets) db.fleets = data.fleets;
+        if (data.fuelData) db.fuelData = data.fuelData;
+        if (data.euData) db.euData = data.euData;
+        if (data.ciiConstants) db.ciiConstants = data.ciiConstants;
+        if (data.euaManualData) db.euaManualData = data.euaManualData;
+        if (data.userData) db.userData = data.userData;
+        if (data.traderContacts) db.traderContacts = data.traderContacts;
+        if (data.orders) db.orders = data.orders;
+        if (data.trades) db.trades = data.trades;
+        if (data.pools) db.pools = data.pools;
+        if (data.emailConfig) db.emailConfig = data.emailConfig;
+
+        save.users();
+        save.fleets();
+        save.fuelData();
+        save.euData();
+        save.ciiData();
+        save.euaManual();
+        save.userData();
+        save.traderContacts();
+        save.trading();
+        save.pools();
+        save.emailConfig();
+
+        res.json({ success: true, message: 'Data restored successfully' });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ success: false, message: 'Restore failed' });
+    }
+};

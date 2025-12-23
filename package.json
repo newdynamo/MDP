@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "description": "Co-Fleeter Maritime SaaS Prototype",
     "scripts": {
-        "start": "concurrently \"node backend/server.js\" \"npm run dev\"",
-        "dev": "lite-server"
+        "start": "node backend/server.js",
+        "dev": "concurrently \"node backend/server.js\" \"lite-server\""
     },
     "devDependencies": {
         "concurrently": "^9.2.1",

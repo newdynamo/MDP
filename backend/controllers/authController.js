@@ -9,6 +9,11 @@ exports.login = (req, res) => {
     const user = db.users.find(u => u.email === email && u.password === password);
 
     if (user) {
+        if (user.suspended) {
+            console.log(`[LOGIN BLOCKED] Suspended Account: ${email}`);
+            return res.status(403).json({ success: false, message: 'This account has been suspended. Please contact administrator.' });
+        }
+
         console.log(`[LOGIN SUCCESS] User: ${user.name} (${user.role})`);
         const { password, ...safeUser } = user;
 

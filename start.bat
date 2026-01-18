@@ -18,7 +18,10 @@ if not exist "backend\node_modules" (
 echo Starting Co-Fleeter...
 echo.
 
-call npm start
+echo Starting browser...
+start /b cmd /c "timeout /t 4 >nul & start "" "http://localhost:3000""
+
+call npm run dev
 
 if %errorlevel% neq 0 (
     echo.
@@ -26,7 +29,6 @@ if %errorlevel% neq 0 (
     echo [CHECK] 1. Is Node.js installed?
     echo [CHECK] 2. Are ports 3000 or 8000 already in use?
     echo.
+    echo Press any key to close...
+    pause
 )
-
-echo Press any key to close...
-pause

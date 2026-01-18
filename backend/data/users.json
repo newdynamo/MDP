@@ -57,43 +57,8 @@
       "VIEW_CALCULATOR",
       "VIEW_MARKET",
       "VIEW_REPORTS"
-    ]
-  },
-  {
-    "id": "trader_a",
-    "role": "TRADER",
-    "email": "atrader@cofleeter.com",
-    "password": "1234",
-    "name": "A Trader",
-    "company": "Co-Fleeter Traders",
-    "permissions": [
-      "VIEW_MARKET",
-      "TRADE"
-    ]
-  },
-  {
-    "id": "trader_b",
-    "role": "TRADER",
-    "email": "btrader@cofleeter.com",
-    "password": "1234",
-    "name": "B Trader",
-    "company": "Co-Fleeter Traders",
-    "permissions": [
-      "VIEW_MARKET",
-      "TRADE"
-    ]
-  },
-  {
-    "id": "trader_c",
-    "role": "TRADER",
-    "email": "ctrader@cofleeter.com",
-    "password": "1234",
-    "name": "C Trader",
-    "company": "Co-Fleeter Traders",
-    "permissions": [
-      "VIEW_MARKET",
-      "TRADE"
-    ]
+    ],
+    "phone": "01096522792"
   },
   {
     "id": "user_1766296671481",
@@ -123,5 +88,101 @@
     "email": "jshan@hls.co.kr",
     "phone": "821092964890",
     "password": "1234"
+  },
+  {
+    "id": "user_1767402380955",
+    "role": "USER",
+    "permissions": [
+      "MANAGE_FLEET",
+      "VIEW_CALCULATOR",
+      "VIEW_MARKET",
+      "VIEW_REPORTS"
+    ],
+    "name": "Test User",
+    "company": "Test Co",
+    "email": "test@example.com",
+    "phone": "1234567890",
+    "password": "password"
+  },
+  {
+    "id": "user_1767403009888",
+    "role": "USER",
+    "permissions": [
+      "MANAGE_FLEET",
+      "VIEW_CALCULATOR",
+      "VIEW_MARKET",
+      "VIEW_REPORTS"
+    ],
+    "name": "Admin",
+    "company": "Example Corp",
+    "email": "admin@example.com",
+    "phone": "1234567890",
+    "password": "password",
+    "suspended": true
+  },
+  {
+    "id": "trader_1767417234742lt74x",
+    "role": "TRADER",
+    "email": "Trading1@cofleeter.com",
+    "password": "1234",
+    "name": "Trader #1",
+    "company": "Co-Fleeter Traders",
+    "phone": "",
+    "permissions": [
+      "VIEW_MARKET",
+      "TRADE"
+    ]
+  },
+  {
+    "id": "trader_1767417238186tjyth",
+    "role": "TRADER",
+    "email": "Trading2@cofleeter.com",
+    "password": "1234",
+    "name": "Trader #2",
+    "company": "Co-Fleeter Traders",
+    "phone": "",
+    "permissions": [
+      "VIEW_MARKET",
+      "TRADE"
+    ]
+  },
+  {
+    "id": "trader_1767424712615bprev",
+    "role": "TRADER",
+    "email": "FuelEU1@cofleeter.com",
+    "password": "1234",
+    "name": "FuelEU Trader #1",
+    "company": "AA-Company",
+    "phone": "1231231311",
+    "permissions": [
+      "VIEW_MARKET",
+      "TRADE"
+    ]
+  },
+  {
+    "id": "trader_1767424712615p3c8e",
+    "role": "TRADER",
+    "email": "FuelEU2@cofleeter.com",
+    "password": "1234",
+    "name": "FuelEU Trader #2",
+    "company": "BB-Company",
+    "phone": "",
+    "permissions": [
+      "VIEW_MARKET",
+      "TRADE"
+    ]
+  },
+  {
+    "id": "trader_17674247126155lv4m",
+    "role": "TRADER",
+    "email": "FuelEU3@cofleeter.com",
+    "password": "1234",
+    "name": "FuelEU Trader #3",
+    "company": "Co-Fleeter Traders",
+    "phone": "",
+    "permissions": [
+      "VIEW_MARKET",
+      "TRADE"
+    ]
   }
 ]

@@ -5,6 +5,8 @@ const adminController = require('../controllers/adminController');
 router.get('/users', adminController.getUsers);
 router.post('/update-permissions', adminController.updatePermissions);
 router.post('/reset-password', adminController.resetPassword);
+router.post('/delete-user', adminController.deleteUser);
+router.post('/toggle-user-status', adminController.toggleUserStatus);
 
 router.get('/email-config', adminController.getEmailConfig);
 router.post('/email-config', adminController.updateEmailConfig);

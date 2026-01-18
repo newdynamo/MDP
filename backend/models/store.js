@@ -19,16 +19,8 @@ const db = {
     accessLogs: [],
     userData: {}, // { userId: { calculations: [] } }
     traderContacts: {
-        ETS: {
-            "Trader A": { name: "", email: "", company: "", phone: "" },
-            "Trader B": { name: "", email: "", company: "", phone: "" },
-            "Trader C": { name: "", email: "", company: "", phone: "" }
-        },
-        FuelEU: {
-            "AA Trader": { name: "", email: "", company: "", phone: "" },
-            "BB Trader": { name: "", email: "", company: "", phone: "" },
-            "CC Trader": { name: "", email: "", company: "", phone: "" }
-        }
+        ETS: [],
+        FuelEU: {}
     },
     orders: [],
     trades: [],
@@ -176,28 +168,16 @@ function _ensureAdminAndTraders() {
         console.log("Store: Restored admin user.");
     }
 
-    // Ensure Traders
-    const traders = [
-        { id: 'trader_a', email: 'atrader@cofleeter.com', name: 'A Trader' },
-        { id: 'trader_b', email: 'btrader@cofleeter.com', name: 'B Trader' },
-        { id: 'trader_c', email: 'ctrader@cofleeter.com', name: 'C Trader' }
-    ];
-    let tradersAdded = false;
-    traders.forEach(t => {
-        if (!db.users.find(u => u.email === t.email)) {
-            db.users.push({
-                id: t.id,
-                role: 'TRADER',
-                email: t.email,
-                password: '1234',
-                name: t.name,
-                company: 'Co-Fleeter Traders',
-                permissions: DEFAULT_ROLE_PERMISSIONS.TRADER
-            });
-            tradersAdded = true;
-        }
-    });
-    if (tradersAdded) saveJSON(paths.USERS_FILE, db.users);
+    // Ensure Traders - REMOVED (Legacy seed data causing zombies)
+    // Ensure Traders - REMOVED (Legacy seed data causing zombies)
+    // Active Cleanup: Remove legacy traders if they still exist
+    const legacyIds = ['trader_a', 'trader_b', 'trader_c'];
+    const initialLength = db.users.length;
+    db.users = db.users.filter(u => !legacyIds.includes(u.id));
+    if (db.users.length !== initialLength) {
+        saveJSON(paths.USERS_FILE, db.users);
+        console.log("Store: Removed legacy traders (A, B, C).");
+    }
 }
 
 

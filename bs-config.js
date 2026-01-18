@@ -12,6 +12,7 @@ module.exports = {
         baseDir: "frontend",
         middleware: [
             (req, res, next) => {
+                console.log(`[Middleware] Request: ${req.url}`);
                 if (req.url.startsWith('/api')) {
                     console.log(`[PROXY] Forwarding ${req.url} to backend...`);
                     return proxy(req, res, next);

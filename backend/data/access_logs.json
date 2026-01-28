@@ -1678,5 +1678,59 @@
     "email": "cfadmin@cofleeter.com",
     "timestamp": 1768464152567,
     "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1769074508238,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1769074508270,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1769571432590,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1769572202474,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1769572202508,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1769573599928,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1769573599952,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1769573997564,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1769573997599,
+    "ip": "::1"
   }
 ]

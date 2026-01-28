@@ -1230,6 +1230,16 @@ async function renderTradingView(marketData) {
             toast.error("Partial failure loading market data");
         }
 
+        // [OPTIMIZATION] Pre-calculate Trader Volumes once (O(N)) instead of inside loop (O(N^2))
+        const traderVolumes = {};
+        if (orders) {
+            orders.forEach(o => {
+                if (o.status === 'FILLED' && o.filledBy) {
+                    traderVolumes[o.filledBy] = (traderVolumes[o.filledBy] || 0) + o.quantity;
+                }
+            });
+        }
+
         const activeFilter = window.currentOrderBookFilter || 'ALL';
         const isRFQ = marketData.useQuoteSystem === true;
         const isTrader = currentUser.role === 'TRADER';
@@ -1403,13 +1413,8 @@ async function renderTradingView(marketData) {
                     else {
                         // USER/ADMIN VIEW - DYNAMIC TOP 5 & SORTING
 
-                        // 1. Calculate Trader Volumes (On the fly)
-                        const traderVolumes = {};
-                        orders.forEach(o => {
-                            if (o.status === 'FILLED' && o.filledBy) {
-                                traderVolumes[o.filledBy] = (traderVolumes[o.filledBy] || 0) + o.quantity;
-                            }
-                        });
+                        // 1. Calculate Trader Volumes (Pre-calculated above)
+                        // const traderVolumes = {}; <- Removed O(N^2) bottleneck
 
                         // 2. Gather Quotes
                         let quoteList = [];
@@ -1564,6 +1569,26 @@ async function renderTradingView(marketData) {
                             ${(() => {
                 const myOrders = currentUser.role === 'ADMIN' ? orders : orders.filter(o => o.owner === currentUser.name || (o.quotes && o.quotes[currentUser.email]));
 
+                // [OPTIMIZATION] Pre-calculate Best Prices for Match Check (O(N))
+                let maxBuyPrice = -1;
+                let minSellPrice = Infinity;
+                if (window.currentOrderBookFilter !== 'ALL') {
+                    // If filter is active, 'orders' might be filtered? No, `orders` var is the raw fetch result.
+                    // But wait, the `orders` variable is from line 1222. It is the full list for the symbol.
+                }
+
+                // We use the full `orders` list for price discovery, not the rendered rows.
+                orders.forEach(o => {
+                    if (o.status === 'OPEN') {
+                        if (o.type === 'BUY') {
+                            if (o.price > maxBuyPrice) maxBuyPrice = o.price;
+                        } else if (o.type === 'SELL') {
+                            if (o.price < minSellPrice) minSellPrice = o.price;
+                        }
+                    }
+                });
+
+
                 return myOrders.map(order => {
                     const isAdmin = currentUser.role === 'ADMIN';
                     const isTrader = currentUser.role === 'TRADER';
@@ -1634,11 +1659,16 @@ async function renderTradingView(marketData) {
 
                     // FuelEU Action Logic (Two-Step)
                     if (order.status === 'OPEN' && order.owner === currentUser.name && marketData.symbol === 'FEM') {
-                        const opponentType = order.type === 'BUY' ? 'SELL' : 'BUY';
-                        // Matches if Opponent Price is favorable AND My Sell >= Opponent Buy (or Opponent Sell >= My Buy check done in backend, here just visibility)
-                        // Actually, backend now enforces Sell >= Buy.
-                        // For front-end button, we just check general match possibility.
-                        const hasMatch = orders.some(o => o.symbol === order.symbol && o.type === opponentType && (order.type === 'BUY' ? o.price <= order.price : o.price >= order.price) && o.status === 'OPEN');
+                        // [OPTIMIZATION] O(1) Check using pre-calculated values
+                        let hasMatch = false;
+                        if (order.type === 'BUY') {
+                            // I am Buy, looking for Sell <= My Price
+                            hasMatch = (minSellPrice <= order.price);
+                        } else {
+                            // I am Sell, looking for Buy >= My Price
+                            hasMatch = (maxBuyPrice >= order.price);
+                        }
+
                         if (hasMatch) {
                             actionBtn = `<div class="flex flex-col gap-1 items-center">
                                          <button onclick="handleRequestTransaction('${order.id}')" class="btn btn-xs btn-primary">Request (Match)</button>

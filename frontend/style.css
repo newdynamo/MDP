@@ -348,6 +348,11 @@ button {
     border-radius: var(--radius-md);
     margin-bottom: 0.25rem;
     transition: all 0.2s;
+    font-size: 1.2rem;
+}
+
+.nav-link span {
+    display: none;
 }
 
 .nav-link:hover,

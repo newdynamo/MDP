@@ -14,5 +14,7 @@ router.post('/accept-quote', tradingController.acceptQuote);
 router.post('/complete-order', tradingController.completeOrder);
 router.post('/request-transaction', tradingController.requestTransaction);
 router.post('/agree-transaction', tradingController.agreeTransaction);
+router.post('/fueleu/confirm', tradingController.confirmFuelEU);
+router.post('/fueleu/complete', tradingController.completeFuelEU);
 
 module.exports = router;

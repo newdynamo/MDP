@@ -1732,5 +1732,47 @@
     "email": "jshan@hls.co.kr",
     "timestamp": 1769573997599,
     "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1772455068146,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1772455068161,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1772455339170,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1772459615291",
+    "email": "test@test.com",
+    "timestamp": 1772459626028,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1772459615291",
+    "email": "test@test.com",
+    "timestamp": 1772460874425,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1772606404102,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1772606404139,
+    "ip": "::1"
   }
 ]

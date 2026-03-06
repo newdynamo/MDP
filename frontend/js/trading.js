@@ -139,6 +139,42 @@ class TradingService {
         }
     }
 
+    async confirmFuelEUTransaction(orderId, traderEmail) {
+        try {
+            const response = await fetch(`${this.baseUrl}/fueleu/confirm`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderId, traderEmail })
+            });
+            const data = await response.json();
+            if (data.success) {
+                window.dispatchEvent(new Event('market-updated'));
+            }
+            return data;
+        } catch (e) {
+            console.error('Failed to confirm FuelEU transaction', e);
+            return { success: false, message: 'Network error' };
+        }
+    }
+
+    async completeFuelEUTransaction(orderId) {
+        try {
+            const response = await fetch(`${this.baseUrl}/fueleu/complete`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderId })
+            });
+            const data = await response.json();
+            if (data.success) {
+                window.dispatchEvent(new Event('market-updated'));
+            }
+            return data;
+        } catch (e) {
+            console.error('Failed to complete FuelEU transaction', e);
+            return { success: false, message: 'Network error' };
+        }
+    }
+
     async updateStatus(orderId, status) {
         try {
             const response = await fetch(`${this.baseUrl}/orders/status`, {

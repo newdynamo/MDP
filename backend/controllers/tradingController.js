@@ -124,11 +124,67 @@ exports.matchOrder = (req, res) => {
     if (orderIndex === -1) return res.status(404).json({ success: false, message: 'Order not found' });
 
     const order = db.orders[orderIndex];
+
+    // For FEM orders, we do a handshake matching process
+    if (order.symbol === 'FEM') {
+        const opponentType = order.type === 'BUY' ? 'SELL' : 'BUY';
+        // Find best OPEN matching order
+        const potentialMatches = db.orders.filter(o =>
+            o.id !== orderId &&
+            o.symbol === 'FEM' &&
+            o.type === opponentType &&
+            o.status === 'OPEN' &&
+            (order.type === 'BUY' ? o.price <= order.price : o.price >= order.price)
+        ).sort((a, b) => order.type === 'BUY' ? a.price - b.price : b.price - a.price);
+
+        if (potentialMatches.length === 0) {
+            return res.status(400).json({ success: false, message: 'No matching order found.' });
+        }
+
+        const targetOrder = potentialMatches[0]; // Best match
+        const matchQty = Math.min(order.quantity, targetOrder.quantity);
+
+        // Helper to split an order if it's partially matched
+        const handlePartialMatch = (origOrder, matchedQty) => {
+            if (origOrder.quantity > matchedQty) {
+                const remainingQty = origOrder.quantity - matchedQty;
+                // Create new child order for the matched part
+                const matchOrder = {
+                    ...origOrder,
+                    id: 'ord_' + Date.now() + Math.random().toString(36).substr(2, 5),
+                    quantity: matchedQty,
+                    status: 'WAITING'
+                };
+                db.orders.unshift(matchOrder);
+
+                // Update original order to keep it OPEN with remaining qty
+                origOrder.quantity = remainingQty;
+                origOrder.status = 'OPEN';
+                return matchOrder;
+            } else {
+                origOrder.status = 'WAITING';
+                return origOrder;
+            }
+        };
+
+        const finalOrder = handlePartialMatch(order, matchQty);
+        const finalTargetOrder = handlePartialMatch(targetOrder, matchQty);
+
+        // Link them
+        finalOrder.linkedOrderId = finalTargetOrder.id;
+        finalTargetOrder.linkedOrderId = finalOrder.id;
+
+        save.trading();
+        return res.json({ success: true, message: 'Matched and Waiting for Confirmation.', matchedQty: matchQty });
+    }
+
+    // Standard Match Logic for ETS (Immediate Execution)
     let remainingQty = order.quantity;
     const executedTrades = [];
 
     const opponents = db.orders.filter(o => {
         if (o.id === orderId) return false;
+        if (o.status !== 'OPEN') return false; // Ensure only OPEN orders are matched
         if (order.type === 'BUY') {
             return o.type === 'SELL' && o.price <= order.price && o.symbol === order.symbol;
         } else {
@@ -163,6 +219,7 @@ exports.matchOrder = (req, res) => {
 
         const matchIndex = db.orders.findIndex(o => o.id === matchOrder.id);
         if (matchOrder.quantity <= matchQty) {
+            db.orders[matchIndex].status = 'FILLED'; // Keep for UI history instead of splice if we want
             db.orders.splice(matchIndex, 1);
         } else {
             db.orders[matchIndex].quantity -= matchQty;
@@ -172,7 +229,10 @@ exports.matchOrder = (req, res) => {
 
     const updatedIndex = db.orders.findIndex(o => o.id === orderId);
     if (updatedIndex !== -1) {
-        if (remainingQty <= 0) db.orders.splice(updatedIndex, 1);
+        if (remainingQty <= 0) {
+            // db.orders[updatedIndex].status = 'FILLED'; 
+            db.orders.splice(updatedIndex, 1);
+        }
         else db.orders[updatedIndex].quantity = remainingQty;
     }
 
@@ -307,6 +367,113 @@ exports.completeOrder = (req, res) => {
     order.status = 'FILLED';
     save.trading();
     res.json({ success: true });
+};
+
+exports.confirmFuelEU = (req, res) => {
+    const { orderId, traderEmail } = req.body;
+    const order = db.orders.find(o => o.id === orderId);
+    if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
+    if (order.symbol !== 'FEM') return res.status(400).json({ success: false, message: 'Only FEM orders support this workflow.' });
+    if (order.status !== 'WAITING') return res.status(400).json({ success: false, message: 'Order is not in WAITING state.' });
+
+    const linkedOrder = db.orders.find(o => o.id === order.linkedOrderId);
+    if (!linkedOrder) return res.status(400).json({ success: false, message: 'Linked order not found.' });
+
+    // Mark current user's order as confirmed
+    const role = order.type === 'BUY' ? 'BUYER' : 'SELLER';
+    order.status = `CONFIRMED_${role}`;
+
+    if (role === 'SELLER' && traderEmail && traderEmail !== '0') {
+        order.fuelEuTraderEmail = traderEmail;
+    }
+
+    // Check if both are confirmed
+    const counterpartRole = linkedOrder.type === 'BUY' ? 'BUYER' : 'SELLER';
+    const isCounterpartConfirmed = linkedOrder.status === `CONFIRMED_${counterpartRole}`;
+
+    if (isCounterpartConfirmed) {
+        order.status = 'IN_PROGRESS';
+        linkedOrder.status = 'IN_PROGRESS';
+
+        // Notify FuelEU Trader if one was selected
+        const sellerOrder = order.type === 'SELL' ? order : linkedOrder;
+        const buyerOrder = order.type === 'BUY' ? order : linkedOrder;
+
+        const traderContactEmail = sellerOrder.fuelEuTraderEmail;
+
+        if (traderContactEmail && traderContactEmail !== '0') {
+            try {
+                const buyerUser = db.users.find(u => u.name === buyerOrder.owner) || {};
+                const sellerUser = db.users.find(u => u.name === sellerOrder.owner) || {};
+
+                // Lookup Trader details
+                let traderInfo = "N/A";
+                const fueleuTraders = db.traderContacts.FuelEU || {};
+                const contactList = Array.isArray(fueleuTraders) ? fueleuTraders : Object.values(fueleuTraders);
+                const selectedTrader = contactList.find(c => c.email === traderContactEmail);
+
+                if (selectedTrader) {
+                    traderInfo = `Company: ${selectedTrader.company || '-'} / Name: ${selectedTrader.name || '-'} / Email: ${selectedTrader.email || '-'} / Phone: ${selectedTrader.phone || '-'}`;
+                }
+
+                const subject = `FuelEU Trading (${buyerOrder.quantity})`;
+                const text = `
+FuelEU Transaction Notification / FuelEU 거래 알림
+
+[Buyer Information / 매수자 정보]
+Company (회사): ${buyerUser.company || '-'}
+Name (이름): ${buyerUser.name || buyerOrder.owner}
+Email (이메일): ${buyerUser.email || '-'}
+Phone (전화번호): ${buyerUser.phone || '-'}
+
+[Seller Information / 매도자 정보]
+Company (회사): ${sellerUser.company || '-'}
+Name (이름): ${sellerUser.name || sellerOrder.owner}
+Email (이메일): ${sellerUser.email || '-'}
+Phone (전화번호): ${sellerUser.phone || '-'}
+
+[Selected FuelEU Trader / 선택된 FuelEU Trader 정보]
+${traderInfo}
+
+Please facilitate the transaction process.
+거래 진행 부탁드립니다.`;
+
+                emailService.sendEmail(traderContactEmail, subject, text);
+                console.log(`Email sent to FuelEU Trader (${traderContactEmail}) for FEM Contract`);
+            } catch (e) {
+                console.error("Error sending email in confirmFuelEU:", e);
+            }
+        }
+    }
+
+    save.trading();
+    res.json({ success: true, message: 'Order confirmed successfully.', status: order.status });
+};
+
+exports.completeFuelEU = (req, res) => {
+    const { orderId } = req.body;
+    const order = db.orders.find(o => o.id === orderId);
+    if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
+    if (order.symbol !== 'FEM') return res.status(400).json({ success: false, message: 'Only FEM orders support this workflow.' });
+    if (order.status !== 'IN_PROGRESS' && !order.status.startsWith('COMPLETED_')) return res.status(400).json({ success: false, message: 'Order is not IN_PROGRESS.' });
+
+    const linkedOrder = db.orders.find(o => o.id === order.linkedOrderId);
+    if (!linkedOrder) return res.status(400).json({ success: false, message: 'Linked order not found.' });
+
+    const role = order.type === 'BUY' ? 'BUYER' : 'SELLER';
+    order.status = `COMPLETED_${role}`;
+
+    // Check if both are completed
+    const counterpartRole = linkedOrder.type === 'BUY' ? 'BUYER' : 'SELLER';
+    const isCounterpartCompleted = linkedOrder.status === `COMPLETED_${counterpartRole}`;
+
+    if (isCounterpartCompleted) {
+        order.status = 'COMPLETED';
+        linkedOrder.status = 'COMPLETED';
+    }
+
+    save.trading();
+    res.json({ success: true, message: 'Order completed successfully.', status: order.status });
 };
 
 exports.requestTransaction = (req, res) => {

@@ -184,5 +184,20 @@
       "VIEW_MARKET",
       "TRADE"
     ]
+  },
+  {
+    "id": "user_1772459615291",
+    "role": "USER",
+    "permissions": [
+      "MANAGE_FLEET",
+      "VIEW_CALCULATOR",
+      "VIEW_MARKET",
+      "VIEW_REPORTS"
+    ],
+    "name": "Test User",
+    "company": "Test Co",
+    "email": "test@test.com",
+    "phone": "12345678",
+    "password": "password123"
   }
 ]

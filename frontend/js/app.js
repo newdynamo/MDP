@@ -62,6 +62,11 @@ companyDisplay.textContent = currentUser.company ? (currentUser.company + (curre
 
 // Router Logic
 function navigate(route) {
+    // Sync URL hash
+    if (window.location.hash !== '#' + route) {
+        window.history.pushState(null, '', '#' + route);
+    }
+
     // Update active link
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
@@ -122,9 +127,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', (e) => {
+        const route = window.location.hash.replace('#', '');
+        if (route) {
+            navigate(route);
+        } else {
+            navigate('dashboard');
+        }
+    });
+
     // Initialize Default View
+    const hashRoute = window.location.hash.replace('#', '');
     const activeLink = document.querySelector('.nav-link.active');
-    const initialRoute = activeLink ? activeLink.dataset.route : 'dashboard';
+    const initialRoute = hashRoute ? hashRoute : (activeLink ? activeLink.dataset.route : 'dashboard');
     navigate(initialRoute);
 });
 
@@ -1207,9 +1223,62 @@ window.handleCompleteOrder = async (id) => {
     }
 };
 
+window.handleConfirmFuelEU = async (id) => {
+    const selectEl = document.getElementById(`fueleu-trader-select-${id}`);
+    const traderEmail = selectEl ? selectEl.value : null;
+
+    if (!confirm('Are you sure you want to confirm this transaction?')) return;
+    window.loading.show("Confirming transaction...");
+    try {
+        const res = await window.tradingService.confirmFuelEUTransaction(id, traderEmail);
+        window.loading.hide();
+        if (res.success) {
+            window.toast.success(res.message);
+            if (typeof renderTradingFuelEU === 'function') renderTradingFuelEU();
+        } else {
+            window.toast.error(res.message || "Failed to confirm.");
+        }
+    } catch (e) {
+        window.loading.hide();
+        console.error(e);
+        window.toast.error("Error confirming transaction.");
+    }
+};
+
+window.handleCompleteFuelEU = async (id) => {
+    if (!confirm('Mark this transaction as completed?')) return;
+    window.loading.show("Updating completion status...");
+    try {
+        const res = await window.tradingService.completeFuelEUTransaction(id);
+        window.loading.hide();
+        if (res.success) {
+            window.toast.success(res.message);
+            if (typeof renderTradingFuelEU === 'function') renderTradingFuelEU();
+        } else {
+            window.toast.error(res.message || "Failed to complete.");
+        }
+    } catch (e) {
+        window.loading.hide();
+        console.error(e);
+        window.toast.error("Error completing transaction.");
+    }
+};
+
 // --- Generic Render Function ---
 async function renderTradingView(marketData) {
     const container = marketData.targetElement || contentArea;
+
+    // Ensure Trader Cache is loaded for FEM orders (if not loaded yet)
+    if (marketData.symbol === 'FEM' && !window.fueleuTradersCache) {
+        try {
+            const adminData = await fetch('/api/admin/trader-contacts').then(r => r.json());
+            if (adminData && adminData.FuelEU) {
+                window.fueleuTradersCache = Array.isArray(adminData.FuelEU) ? adminData.FuelEU : Object.values(adminData.FuelEU);
+            } else {
+                window.fueleuTradersCache = [];
+            }
+        } catch (e) { console.error("Could not load trader contacts", e); window.fueleuTradersCache = []; }
+    }
     try {
         container.innerHTML = '<div class="p-8 text-center"><div class="spinner"></div><p>Loading market data...</p></div>';
 
@@ -1619,7 +1688,7 @@ async function renderTradingView(marketData) {
                     // If user has rights to change status (Buyer, Admin, or Involved Trader) - For simplicity, let involved parties edit process
                     const canEdit = isAdmin || isBuyer || (isTrader && isMyWin) || (isTrader && order.status === 'REQUESTED');
 
-                    if (canEdit && marketData.symbol === 'FEM') {
+                    if (canEdit && marketData.symbol === 'FEM' && !['WAITING', 'CONFIRMED_BUYER', 'CONFIRMED_SELLER', 'IN_PROGRESS', 'COMPLETED_BUYER', 'COMPLETED_SELLER', 'COMPLETED'].includes(order.status)) {
                         statusHtml = `
                        <select onchange="handleUpdateStatus('${order.id}', this.value)" class="bg-transparent border border-gray-700 rounded text-xs p-1">
                            ${statusOptions.map(opt => `<option value="${opt}" ${order.status === opt ? 'selected' : ''}>${opt}</option>`).join('')}
@@ -1627,8 +1696,33 @@ async function renderTradingView(marketData) {
                    `;
                     } else {
                         let displayStatus = order.status;
-                        if (order.status === 'CONTRACT') displayStatus = 'CONTRACT (Processing)';
-                        statusHtml = `<span class="text-sm ${order.status === 'FILLED' ? 'text-success' : (order.status === 'CONTRACT' ? 'text-info' : 'text-muted')}">${displayStatus}</span>`;
+                        let statusColor = 'text-muted';
+
+                        if (marketData.symbol === 'FEM') {
+                            const statusMap = {
+                                'OPEN': '견적중',
+                                'WAITING': '대기중',
+                                'CONFIRMED_BUYER': '확정(BUYER)',
+                                'CONFIRMED_SELLER': '확정(SELLER)',
+                                'IN_PROGRESS': '진행중',
+                                'COMPLETED_BUYER': '완료(BUYER)',
+                                'COMPLETED_SELLER': '완료(SELLER)',
+                                'COMPLETED': '완료',
+                                'FILLED': '완료(강제)'
+                            };
+                            if (statusMap[order.status]) {
+                                displayStatus = statusMap[order.status];
+                            }
+                            if (order.status === 'OPEN') statusColor = 'text-info';
+                            if (order.status === 'WAITING' || order.status.startsWith('CONFIRMED')) statusColor = 'text-warning';
+                            if (order.status === 'IN_PROGRESS') statusColor = 'text-primary font-bold';
+                            if (order.status.startsWith('COMPLETED') || order.status === 'FILLED') statusColor = 'text-success font-bold';
+                        } else {
+                            if (order.status === 'CONTRACT') displayStatus = 'CONTRACT (Processing)';
+                            statusColor = order.status === 'FILLED' ? 'text-success' : (order.status === 'CONTRACT' ? 'text-info' : 'text-muted');
+                        }
+
+                        statusHtml = `<span class="text-sm ${statusColor}">${displayStatus}</span>`;
                     }
 
                     // Open / RFQ logic
@@ -1658,22 +1752,63 @@ async function renderTradingView(marketData) {
                     }
 
                     // FuelEU Action Logic (Two-Step)
-                    if (order.status === 'OPEN' && order.owner === currentUser.name && marketData.symbol === 'FEM') {
-                        // [OPTIMIZATION] O(1) Check using pre-calculated values
-                        let hasMatch = false;
-                        if (order.type === 'BUY') {
-                            // I am Buy, looking for Sell <= My Price
-                            hasMatch = (minSellPrice <= order.price);
-                        } else {
-                            // I am Sell, looking for Buy >= My Price
-                            hasMatch = (maxBuyPrice >= order.price);
-                        }
+                    if (marketData.symbol === 'FEM') {
+                        if (order.status === 'OPEN' && order.owner === currentUser.name) {
+                            // [OPTIMIZATION] O(1) Check using pre-calculated values
+                            let hasMatch = false;
+                            if (order.type === 'BUY') {
+                                hasMatch = (minSellPrice <= order.price);
+                            } else {
+                                hasMatch = (maxBuyPrice >= order.price);
+                            }
 
-                        if (hasMatch) {
-                            actionBtn = `<div class="flex flex-col gap-1 items-center">
-                                         <button onclick="handleRequestTransaction('${order.id}')" class="btn btn-xs btn-primary">Request (Match)</button>
-                                         <button onclick="handleCancelOrder('${order.id}')" class="text-danger hover:underline text-xs">Cancel</button>
-                                     </div>`;
+                            if (hasMatch) {
+                                actionBtn = `<div class="flex flex-col gap-1 items-center">
+                                             <button onclick="handleRequestTransaction('${order.id}')" class="btn btn-xs btn-primary">Request (Match)</button>
+                                             <button onclick="handleCancelOrder('${order.id}')" class="text-danger hover:underline text-xs">Cancel</button>
+                                         </div>`;
+                            }
+                        } else if (order.status === 'WAITING' || order.status === 'CONFIRMED_BUYER' || order.status === 'CONFIRMED_SELLER') {
+                            const role = order.type === 'BUY' ? 'BUYER' : 'SELLER';
+                            const counterpartRole = order.type === 'BUY' ? 'SELLER' : 'BUYER';
+                            const isMyConfirmationDone = order.status.includes(role);
+
+                            if (isMyConfirmationDone) {
+                                actionBtn = `<span class="text-xs text-warning">Waiting for Counterpart</span>`;
+                            } else {
+                                if (role === 'SELLER') {
+                                    // Make Trader Select Dropdown
+                                    let traderOptions = '<option value="0">0: 필요없음 (None)</option>';
+                                    if (window.fueleuTradersCache) {
+                                        window.fueleuTradersCache.forEach((t, idx) => {
+                                            traderOptions += `<option value="${t.email}">${idx + 1}: ${t.name} (${t.company || 'Unknown'})</option>`;
+                                        });
+                                    }
+
+                                    actionBtn = `
+                                        <div class="flex flex-col gap-1 items-center">
+                                            <select id="fueleu-trader-select-${order.id}" class="bg-gray-800 border border-gray-600 rounded text-[10px] p-1 w-full max-w-[120px]">
+                                                ${traderOptions}
+                                            </select>
+                                            <button onclick="window.handleConfirmFuelEU('${order.id}')" class="btn btn-xs btn-success w-full">확정</button>
+                                        </div>
+                                    `;
+                                } else {
+                                    actionBtn = `<button onclick="window.handleConfirmFuelEU('${order.id}')" class="btn btn-xs btn-success w-full">확정</button>`;
+                                }
+                            }
+                        } else if (order.status === 'IN_PROGRESS' || order.status.startsWith('COMPLETED_')) {
+                            const role = order.type === 'BUY' ? 'BUYER' : 'SELLER';
+                            if (order.status === `COMPLETED_${role}`) {
+                                actionBtn = `<span class="text-xs text-success font-bold">Waiting for Counterpart</span>`;
+                            } else {
+                                actionBtn = `<button onclick="window.handleCompleteFuelEU('${order.id}')" class="btn btn-xs btn-primary w-full">완료</button>`;
+                            }
+                        }
+                    } else {
+                        // Original Legacy ETS / Default Handshake Logic (Request Transaction)
+                        if (order.status === 'OPEN' && order.owner === currentUser.name) {
+                            // Legacy code logic...
                         }
                     }
                     if (order.status === 'REQUESTED') {

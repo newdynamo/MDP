@@ -16,7 +16,10 @@
             <div style="width: 40px; height: 40px; background: var(--color-primary); border-radius: 50%;"></div>
             <span style="font-size: 1.5rem; font-weight: 800; color: white;">Co-Fleeter</span>
         </div>
-        <button id="open-login-btn" class="btn btn-primary">Login / Register</button>
+        <div class="flex items-center gap-4">
+            <button id="lang-toggle" class="btn btn-outline" style="padding: 0.5rem; min-width: 60px;">KR</button>
+            <button id="open-login-btn" class="btn btn-primary" data-i18n="login_btn">Login / Register</button>
+        </div>
     </header>
 
     <main class="landing-main">
@@ -25,21 +28,21 @@
             <div class="hero-shape hero-shape-1"></div>
             <div class="hero-shape hero-shape-2"></div>
 
-            <div class="hero-title">Sustain your fleet with us</div>
+            <div class="hero-title" data-i18n="hero_title">Sustain your fleet with us</div>
             <div class="hero-subtitle">Co-Fleeter</div>
         </section>
 
         <!-- VISION & GOALS SECTION -->
         <section class="landing-section">
-            <h2 class="section-title">Our Vision & Goals</h2>
+            <h2 class="section-title" data-i18n="vision_goals_title">Our Vision & Goals</h2>
             <div class="content-block vision-grid">
                 <div class="vision-item">
-                    <h3>Our Vision</h3>
-                    <p>To empower the maritime industry to confidently navigate the decarbonization era.</p>
+                    <h3 data-i18n="vision_title">Our Vision</h3>
+                    <p data-i18n="vision_desc">To empower the maritime industry to confidently navigate the decarbonization era.</p>
                 </div>
                 <div class="vision-item">
-                    <h3>Our Goals</h3>
-                    <p>
+                    <h3 data-i18n="goals_title">Our Goals</h3>
+                    <p data-i18n="goals_desc">
                         The EU's introduction of EU ETS (2024 for maritime) and FuelEU Maritime (2025 onwards) creates
                         new challenges for shipowners and cargo owners, necessitating carbon allowance purchases and
                         promoting low-carbon fuel use. Recognizing the critical need for trading platforms in this
@@ -52,9 +55,9 @@
 
         <!-- STANDARDS SECTION -->
         <section class="landing-section" style="background: rgba(255,255,255,0.02);">
-            <h2 class="section-title">Standards & References</h2>
+            <h2 class="section-title" data-i18n="standards_title">Standards & References</h2>
             <div class="content-block">
-                <h4 style="font-size: 1.5rem; margin-bottom: 2rem; color: #cbd5e1;">About our calculation basis</h4>
+                <h4 data-i18n="calculation_basis" style="font-size: 1.5rem; margin-bottom: 2rem; color: #cbd5e1;">About our calculation basis</h4>
 
                 <!-- CII -->
                 <div class="standard-category">
@@ -118,48 +121,48 @@
 
         <!-- CONTACT SECTION -->
         <section class="landing-section">
-            <h2 class="section-title">Contact us</h2>
+            <h2 class="section-title" data-i18n="contact_title">Contact us</h2>
             <div class="contact-container">
                 <form class="grid grid-cols-2 gap-4">
                     <div class="input-group">
-                        <label class="input-label">First Name *</label>
+                        <label class="input-label" data-i18n="fname">First Name *</label>
                         <input type="text" class="input-field">
                     </div>
                     <div class="input-group">
-                        <label class="input-label">Last Name *</label>
+                        <label class="input-label" data-i18n="lname">Last Name *</label>
                         <input type="text" class="input-field">
                     </div>
 
                     <div class="input-group">
-                        <label class="input-label">Email *</label>
+                        <label class="input-label" data-i18n="email">Email *</label>
                         <input type="email" class="input-field">
                     </div>
                     <div class="input-group">
-                        <label class="input-label">Number with country code *</label>
+                        <label class="input-label" data-i18n="phone">Number with country code *</label>
                         <input type="text" class="input-field">
                     </div>
 
                     <div class="input-group" style="grid-column: span 2;">
-                        <label class="input-label">Company name *</label>
+                        <label class="input-label" data-i18n="company">Company name *</label>
                         <input type="text" class="input-field">
                     </div>
 
                     <div class="input-group" style="grid-column: span 2;">
-                        <label class="input-label">Write your message or describe your issue here. *</label>
+                        <label class="input-label" data-i18n="message">Write your message or describe your issue here. *</label>
                         <textarea class="input-field" rows="4"></textarea>
                     </div>
 
                     <div class="input-group" style="grid-column: span 2;">
                         <label class="flex items-center gap-2 cursor-pointer text-sm text-muted">
                             <input type="checkbox" required>
-                            <span>I accept Co-Fleeter's <a href="#" style="text-decoration: underline;">privacy
+                            <span data-i18n="privacy">I accept Co-Fleeter's <a href="#" style="text-decoration: underline;">privacy
                                     policy</a> and being signed up to receiving marketing communications. I understand I
                                 can unsubscribe from these at anytime. *</span>
                         </label>
                     </div>
 
                     <div style="grid-column: span 2;">
-                        <button class="btn btn-primary w-full">Submit</button>
+                        <button class="btn btn-primary w-full" data-i18n="submit">Submit</button>
                     </div>
                 </form>
             </div>
@@ -361,6 +364,68 @@
                     toast.error(result.message || 'Registration failed');
                 }
             });
+        });
+
+        // i18n Logic
+        const translations = {
+            en: {
+                login_btn: "Login / Register",
+                hero_title: "Sustain your fleet with us",
+                vision_goals_title: "Our Vision & Goals",
+                vision_title: "Our Vision",
+                vision_desc: "To empower the maritime industry to confidently navigate the decarbonization era.",
+                goals_title: "Our Goals",
+                goals_desc: "The EU's introduction of EU ETS (2024 for maritime) and FuelEU Maritime (2025 onwards) creates new challenges for shipowners and cargo owners, necessitating carbon allowance purchases and promoting low-carbon fuel use. Recognizing the critical need for trading platforms in this evolving landscape, our goal is to provide an essential solution for compliance, cost optimization, and the transition to sustainable shipping.",
+                standards_title: "Standards & References",
+                calculation_basis: "About our calculation basis",
+                contact_title: "Contact us",
+                fname: "First Name *",
+                lname: "Last Name *",
+                email: "Email *",
+                phone: "Number with country code *",
+                company: "Company name *",
+                message: "Write your message or describe your issue here. *",
+                privacy: `I accept Co-Fleeter's <a href="#" style="text-decoration: underline;">privacy policy</a> and being signed up to receiving marketing communications. I understand I can unsubscribe from these at anytime. *`,
+                submit: "Submit"
+            },
+            ko: {
+                login_btn: "로그인 / 회원가입",
+                hero_title: "지속가능한 선대를 위하여",
+                vision_goals_title: "우리의 비전 & 목표",
+                vision_title: "비전",
+                vision_desc: "해운 산업이 탈탄소화 시대를 자신 있게 항해할 수 있도록 지원합니다.",
+                goals_title: "목표",
+                goals_desc: "EU ETS(2024년 해운 적용)와 FuelEU Maritime(2025년 이후)의 도입은 선주와 화주에게 탄소 배출권 구매와 저탄소 연료 사용 촉진이라는 새로운 과제를 안겨줍니다. 변화하는 환경에서 거래 플랫폼의 중요성을 인식하고, 규제 준수와 비용 최적화, 지속가능한 해운으로의 전환을 위한 핵심 솔루션을 제공하는 것이 우리의 목표입니다.",
+                standards_title: "표준 및 참고자료",
+                calculation_basis: "계산 기준에 대하여",
+                contact_title: "문의하기",
+                fname: "이름 *",
+                lname: "성 *",
+                email: "이메일 *",
+                phone: "전화번호 (국가번호 포함) *",
+                company: "회사명 *",
+                message: "메시지나 문의사항을 입력해주세요. *",
+                privacy: `Co-Fleeter의 <a href="#" style="text-decoration: underline;">개인정보 처리방침</a>에 동의하며 마케팅 정보 수신에 동의합니다. 언제든지 수신 거부할 수 있음을 이해합니다. *`,
+                submit: "제출"
+            }
+        };
+
+        let currentLang = 'en';
+        const langToggleBtn = document.getElementById('lang-toggle');
+
+        function updateLanguage() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+            langToggleBtn.textContent = currentLang === 'en' ? 'KR' : 'EN';
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ko' : 'en';
+            updateLanguage();
         });
     </script>
 </body>

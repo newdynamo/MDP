@@ -1688,7 +1688,7 @@ async function renderTradingView(marketData) {
                     // If user has rights to change status (Buyer, Admin, or Involved Trader) - For simplicity, let involved parties edit process
                     const canEdit = isAdmin || isBuyer || (isTrader && isMyWin) || (isTrader && order.status === 'REQUESTED');
 
-                    if (canEdit && marketData.symbol === 'FEM' && !['WAITING', 'CONFIRMED_BUYER', 'CONFIRMED_SELLER', 'IN_PROGRESS', 'COMPLETED_BUYER', 'COMPLETED_SELLER', 'COMPLETED'].includes(order.status)) {
+                    if (isAdmin && marketData.symbol === 'FEM' && !['WAITING', 'CONFIRMED_BUYER', 'CONFIRMED_SELLER', 'IN_PROGRESS', 'COMPLETED_BUYER', 'COMPLETED_SELLER', 'COMPLETED'].includes(order.status)) {
                         statusHtml = `
                        <select onchange="handleUpdateStatus('${order.id}', this.value)" class="bg-transparent border border-gray-700 rounded text-xs p-1">
                            ${statusOptions.map(opt => `<option value="${opt}" ${order.status === opt ? 'selected' : ''}>${opt}</option>`).join('')}
@@ -1722,7 +1722,8 @@ async function renderTradingView(marketData) {
                             statusColor = order.status === 'FILLED' ? 'text-success' : (order.status === 'CONTRACT' ? 'text-info' : 'text-muted');
                         }
 
-                        statusHtml = `<span class="text-sm ${statusColor}">${displayStatus}</span>`;
+                        // Added styling to make the automatic status clearly visible
+                        statusHtml = `<span class="text-sm px-2 py-1 rounded bg-black/20 border border-gray-700 ${statusColor} shadow-sm whitespace-nowrap">${displayStatus}</span>`;
                     }
 
                     // Open / RFQ logic
@@ -1768,7 +1769,7 @@ async function renderTradingView(marketData) {
                                              <button onclick="handleCancelOrder('${order.id}')" class="text-danger hover:underline text-xs">Cancel</button>
                                          </div>`;
                             }
-                        } else if (order.status === 'WAITING' || order.status === 'CONFIRMED_BUYER' || order.status === 'CONFIRMED_SELLER') {
+                        } else if (order.status === 'WAITING' || (order.status === 'CONTRACT' && marketData.symbol === 'FEM') || order.status === 'CONFIRMED_BUYER' || order.status === 'CONFIRMED_SELLER') {
                             const role = order.type === 'BUY' ? 'BUYER' : 'SELLER';
                             const counterpartRole = order.type === 'BUY' ? 'SELLER' : 'BUYER';
                             const isMyConfirmationDone = order.status.includes(role);
@@ -1817,8 +1818,8 @@ async function renderTradingView(marketData) {
                     if (order.status === 'REQUESTING') {
                         actionBtn = `<span class="text-xs text-warning">Waiting for Agree...</span>`;
                     }
-                    if (order.status === 'CONTRACT') {
-                        if (isAdmin || (isTrader && marketData.symbol === 'FEM')) {
+                    if (order.status === 'CONTRACT' && marketData.symbol !== 'FEM') {
+                        if (isAdmin || isTrader) {
                             actionBtn = `<button onclick="handleCompleteOrder('${order.id}')" class="btn btn-xs btn-primary">Complete</button>`;
                         } else {
                             actionBtn = `<span class="text-xs text-info font-bold">Under Contract</span>`;
@@ -1832,7 +1833,13 @@ async function renderTradingView(marketData) {
                         <td class="p-2 text-center font-bold text-xl">${order.quantity.toLocaleString()}</td>
                         <td class="p-2 text-center text-xl">${unitPriceDisplay}</td>
                         <td class="p-2 text-center text-muted text-lg">${priceDisplay}</td>
-                        ${marketData.symbol === 'FEM' ? `<td class="p-2 text-center text-info font-bold">FuelEU Trader</td>` : ''}
+                        ${marketData.symbol === 'FEM' ? `
+                            <td class="p-2 text-center font-bold">
+                                ${order.linkedOrderId ?
+                                (orders.find(o => o.id === order.linkedOrderId)?.ownerCompany || orders.find(o => o.id === order.linkedOrderId)?.owner || 'FuelEU Trader')
+                                : '<span class="text-muted font-normal text-sm">Pending</span>'}
+                            </td>
+                        ` : ''}
                         <td class="p-2 text-center text-sm">${actionBtn}</td>
                         <td class="p-2 text-center text-sm">${statusHtml}</td>
                     </tr>

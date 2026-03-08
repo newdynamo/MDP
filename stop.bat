@@ -7,6 +7,11 @@ echo   (Targeting Ports 3000 & 8000)
 echo ===================================================
 echo.
 
+:: 1. Attempt graceful shutdown first
+echo [INFO] Sending graceful shutdown signal to Backend...
+curl -X POST http://localhost:8000/api/system/shutdown >nul 2>&1
+timeout /t 3 /nobreak >nul
+
 set found=0
 
 :: Kill process on Port 3000 (Frontend)

@@ -43,9 +43,49 @@ app.use(express.static(path.join(__dirname, '../frontend')));
     app.use('/api/pooling', poolingRoutes);
     app.use('/api', apiRoutes);
 
+    // --- System Graceful Shutdown Endpoint for stop.bat ---
+    app.post('/api/system/shutdown', (req, res) => {
+        res.json({ success: true, message: 'Shutting down safely...' });
+        console.log('\n[System] Shutdown requested via API endpoint.');
+        setTimeout(shutdown, 500); // Give time for response to flush
+    });
+
     // --- Start Server ---
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
         console.log(`Co-Fleeter Backend running on port ${PORT}`);
         console.log(`Make sure to run frontend on http://localhost:3000 or open index.html`);
     });
+
+    // --- Graceful Shutdown Handler ---
+    const shutdown = () => {
+        console.log('\n[System] Shutdown signal received. Saving all data to disk...');
+        try {
+            if (store.save) {
+                // Ensure all in-memory data caches are flushed to disk before quitting.
+                store.save.users();
+                store.save.fleets();
+                store.save.fuelData();
+                store.save.euData();
+                store.save.ciiData();
+                store.save.euaManual();
+                store.save.userData();
+                store.save.traderContacts();
+                store.save.trading();
+                store.save.pools();
+                store.save.emailConfig();
+            }
+            console.log('[System] All data saved successfully. Server stopping now.');
+        } catch (error) {
+            console.error('[System] Error saving data on shutdown:', error);
+        }
+
+        server.close(() => {
+            console.log('[System] Connections closed.');
+            process.exit(0);
+        });
+    };
+
+    // Listen for stop signals (e.g. Ctrl+C in terminal)
+    process.on('SIGINT', shutdown);
+    process.on('SIGTERM', shutdown);
 })();

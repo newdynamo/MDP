@@ -70,6 +70,20 @@ exports.createOrder = (req, res) => {
         ...req.body
     };
 
+    // Anti-Spam & Duplicate Preventer (2 seconds)
+    const isDuplicate = db.orders.some(o =>
+        o.owner === order.owner &&
+        o.symbol === order.symbol &&
+        o.type === order.type &&
+        o.quantity === order.quantity &&
+        o.price === order.price &&
+        (Date.now() - o.timestamp) < 2000
+    );
+
+    if (isDuplicate) {
+        return res.status(400).json({ success: false, message: 'Duplicate order detected. Please wait out the 2-second cooldown.' });
+    }
+
     const ownerUser = db.users.find(u => u.name === order.owner);
     order.ownerCompany = ownerUser && ownerUser.company ? ownerUser.company : order.owner;
 
@@ -374,7 +388,7 @@ exports.confirmFuelEU = (req, res) => {
     const order = db.orders.find(o => o.id === orderId);
     if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
     if (order.symbol !== 'FEM') return res.status(400).json({ success: false, message: 'Only FEM orders support this workflow.' });
-    if (order.status !== 'WAITING') return res.status(400).json({ success: false, message: 'Order is not in WAITING state.' });
+    if (order.status !== 'WAITING' && order.status !== 'CONTRACT') return res.status(400).json({ success: false, message: 'Order is not in WAITING state.' });
 
     const linkedOrder = db.orders.find(o => o.id === order.linkedOrderId);
     if (!linkedOrder) return res.status(400).json({ success: false, message: 'Linked order not found.' });
@@ -490,6 +504,7 @@ exports.requestTransaction = (req, res) => {
         o.symbol === order.symbol &&
         o.type === opponentType &&
         o.status === 'OPEN' &&
+        o.owner !== order.owner && // Prevent self-matching
         (order.type === 'BUY' ? o.price <= order.price : o.price >= order.price)
     ).sort((a, b) => order.type === 'BUY' ? a.price - b.price : b.price - a.price);
 
@@ -564,7 +579,7 @@ exports.agreeTransaction = (req, res) => {
 
 
     const initiatorOrder = db.orders.find(o => o.id === order.linkedOrderId);
-    if (!initiatorOrder || initiatorOrder.status !== 'REQUESTING') {
+    if (!initiatorOrder || (initiatorOrder.status !== 'REQUESTING' && initiatorOrder.status !== 'REQUESTED')) {
         // Rollback state if link is broken
         order.status = 'OPEN';
         delete order.linkedOrderId;
@@ -591,6 +606,9 @@ exports.agreeTransaction = (req, res) => {
 
     let finalSellOrderId = sellOrder.id;
 
+    // Determine target status based on symbol (FuelEU requires WAITING for confirmation)
+    const targetStatus = sellOrder.symbol === 'FEM' ? 'WAITING' : 'CONTRACT';
+
     if (sellOrder.quantity > buyOrder.quantity) {
         // PARTIAL FILL SCENARIO
         const remainingQty = sellOrder.quantity - matchQty;
@@ -600,7 +618,7 @@ exports.agreeTransaction = (req, res) => {
             ...sellOrder,
             id: 'ord_' + Date.now() + '_sub',
             quantity: matchQty,
-            status: 'CONTRACT',
+            status: targetStatus,
             linkedOrderId: buyOrder.id,
             timestamp: Date.now() // New timestamp for the contract part? Or keep old? Let's update.
         };
@@ -617,10 +635,10 @@ exports.agreeTransaction = (req, res) => {
 
     } else {
         // FULL FILL SCENARIO
-        sellOrder.status = 'CONTRACT';
+        sellOrder.status = targetStatus;
     }
 
-    buyOrder.status = 'CONTRACT';
+    buyOrder.status = targetStatus;
 
     // --- Email Notification Logic (Contract Started -> Notify FuelEU Trader) ---
     try {

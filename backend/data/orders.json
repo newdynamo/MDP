@@ -1,171 +1,120 @@
 [
   {
-    "id": "ord_1772461317257v3n9n",
-    "timestamp": 1772461317257,
+    "id": "ord_1772948050911ofhz5",
+    "timestamp": 1772948050911,
     "quotes": {},
-    "status": "OPEN",
-    "symbol": "FEM",
-    "type": "BUY",
-    "quantity": 100,
-    "price": 200,
-    "owner": "Test User",
-    "ownerCompany": "Test Co"
-  },
-  {
-    "id": "ord_1772460014257gjp3m",
-    "timestamp": 1772460014257,
-    "quotes": {},
-    "status": "REQUESTING",
+    "status": "DELETED",
     "symbol": "FEM",
     "type": "SELL",
-    "quantity": 1000,
-    "price": 200,
-    "owner": "Test User",
-    "ownerCompany": "Test Co",
-    "linkedOrderId": "ord_1772459679914l1mbv"
-  },
-  {
-    "id": "ord_1772459679914l1mbv",
-    "timestamp": 1772459679914,
-    "quotes": {},
-    "status": "REQUESTED",
-    "symbol": "FEM",
-    "type": "BUY",
-    "quantity": 1000,
-    "price": 200,
-    "owner": "Test User",
-    "ownerCompany": "Test Co",
-    "linkedOrderId": "ord_1772460014257gjp3m"
-  },
-  {
-    "id": "ord_17684639243595qz8l",
-    "timestamp": 1768463924359,
-    "quotes": {
-      "Trading1@cofleeter.com": {
-        "price": 10000,
-        "traderName": "Trader #1",
-        "timestamp": 1768464054218
-      }
-    },
-    "status": "PROCESSING",
-    "symbol": "EUA",
-    "type": "RFQ",
-    "quantity": 1000,
-    "price": 0,
-    "owner": "junsunhan",
-    "ownerCompany": "HLS",
-    "filledPrice": 10000,
-    "filledBy": "Trader #1"
-  },
-  {
-    "id": "ord_1768463924064ustcc",
-    "timestamp": 1768463924064,
-    "quotes": {},
-    "status": "OPEN",
-    "symbol": "EUA",
-    "type": "RFQ",
-    "quantity": 1000,
-    "price": 0,
-    "owner": "junsunhan",
-    "ownerCompany": "HLS"
-  },
-  {
-    "id": "ord_1767594084668d8jmy",
-    "timestamp": 1767594084668,
-    "quotes": {},
-    "status": "OPEN",
-    "symbol": "FEM",
-    "type": "BUY",
-    "quantity": 100,
-    "price": 200,
-    "owner": "junsunhan",
-    "ownerCompany": "HLS"
-  },
-  {
-    "id": "ord_1767594084654nebv0",
-    "timestamp": 1767594084654,
-    "quotes": {},
-    "status": "OPEN",
-    "symbol": "FEM",
-    "type": "BUY",
-    "quantity": 100,
-    "price": 200,
-    "owner": "junsunhan",
-    "ownerCompany": "HLS"
-  },
-  {
-    "id": "ord_1767536754153yl14l",
-    "timestamp": 1767536754153,
-    "quotes": {},
-    "status": "PROCESSING",
-    "symbol": "FEM",
-    "type": "BUY",
-    "quantity": 500,
+    "quantity": 2000,
     "price": 200,
     "owner": "JOO SUNGJUN",
     "ownerCompany": "HYUNDAI LNG SHIPPING CO., LTD.",
-    "linkedOrderId": "ord_1767535493175kpufa"
+    "deleted": true
   },
   {
-    "id": "ord_17675367161262bzim",
-    "timestamp": 1767536716126,
+    "id": "ord_1772947282015tlfeh",
+    "timestamp": 1772947282015,
     "quotes": {},
-    "status": "OPEN",
-    "symbol": "EUA",
-    "type": "RFQ",
-    "quantity": 1000,
-    "price": 0,
-    "owner": "JOO SUNGJUN",
-    "ownerCompany": "HYUNDAI LNG SHIPPING CO., LTD."
-  },
-  {
-    "id": "ord_1767535493175kpufa",
-    "timestamp": 1767535493176,
-    "quotes": {},
-    "status": "PROCESSING",
+    "status": "COMPLETED_SELLER",
     "symbol": "FEM",
     "type": "SELL",
-    "quantity": 200,
-    "price": 200,
-    "owner": "주성준",
-    "ownerCompany": "현대엘엔지쉽핑",
-    "linkedOrderId": "ord_1767536754153yl14l"
-  },
-  {
-    "id": "ord_1767535374852so5ed",
-    "timestamp": 1767535374852,
-    "quotes": {},
-    "status": "OPEN",
-    "symbol": "FEM",
-    "type": "BUY",
-    "quantity": 100,
+    "quantity": 1000,
     "price": 200,
     "owner": "JOO SUNGJUN",
-    "ownerCompany": "HYUNDAI LNG SHIPPING CO., LTD."
+    "ownerCompany": "HYUNDAI LNG SHIPPING CO., LTD.",
+    "linkedOrderId": "ord_1772946850977akypp",
+    "fuelEuTraderEmail": "sjjoo@hls.com"
   },
   {
-    "id": "ord_1767533484961w7qj3",
-    "timestamp": 1767533484961,
+    "id": "ord_1772947255322s9iso",
+    "timestamp": 1772947255322,
+    "quotes": {},
+    "status": "DELETED",
+    "symbol": "FEM",
+    "type": "BUY",
+    "quantity": 1000,
+    "price": 200,
+    "owner": "JOO SUNGJUN",
+    "ownerCompany": "HYUNDAI LNG SHIPPING CO., LTD.",
+    "deleted": true
+  },
+  {
+    "id": "ord_1772946850977akypp",
+    "timestamp": 1772946850977,
+    "quotes": {},
+    "status": "IN_PROGRESS",
+    "symbol": "FEM",
+    "type": "BUY",
+    "quantity": 1000,
+    "price": 200,
+    "owner": "junsunhan",
+    "ownerCompany": "HLS",
+    "linkedOrderId": "ord_1772947282015tlfeh"
+  },
+  {
+    "id": "ord_1772946850944uwwrk",
+    "timestamp": 1772946850944,
     "quotes": {},
     "status": "OPEN",
     "symbol": "FEM",
     "type": "BUY",
-    "quantity": 100,
+    "quantity": 1000,
     "price": 200,
     "owner": "junsunhan",
     "ownerCompany": "HLS"
   },
   {
-    "id": "ord_176753348495182t7x",
-    "timestamp": 1767533484951,
+    "id": "ord_1772946262778etbrp",
+    "timestamp": 1772946262778,
     "quotes": {},
-    "status": "OPEN",
+    "status": "DELETED",
     "symbol": "FEM",
     "type": "BUY",
-    "quantity": 100,
+    "quantity": 1000,
     "price": 200,
     "owner": "junsunhan",
-    "ownerCompany": "HLS"
+    "ownerCompany": "HLS",
+    "deleted": true
+  },
+  {
+    "id": "ord_1772946262746de48k",
+    "timestamp": 1772946262747,
+    "quotes": {},
+    "status": "DELETED",
+    "symbol": "FEM",
+    "type": "BUY",
+    "quantity": 1000,
+    "price": 200,
+    "owner": "junsunhan",
+    "ownerCompany": "HLS",
+    "deleted": true
+  },
+  {
+    "id": "ord_1772946082739ccotz",
+    "timestamp": 1772946082739,
+    "quotes": {},
+    "status": "DELETED",
+    "symbol": "FEM",
+    "type": "BUY",
+    "quantity": 200,
+    "price": 200,
+    "owner": "junsunhan",
+    "ownerCompany": "HLS",
+    "deleted": true
+  },
+  {
+    "id": "ord_1772946082729jr8py",
+    "timestamp": 1772946082729,
+    "quotes": {},
+    "status": "DELETED",
+    "symbol": "FEM",
+    "type": "BUY",
+    "quantity": 200,
+    "price": 200,
+    "owner": "junsunhan",
+    "ownerCompany": "HLS",
+    "deleted": true
   },
   {
     "id": "ord_1",
@@ -174,7 +123,7 @@
     "quantity": 5000,
     "price": 85.5,
     "owner": "Market Maker",
-    "timestamp": 1767533306252
+    "timestamp": 1772945897180
   },
   {
     "id": "ord_2",
@@ -183,6 +132,6 @@
     "quantity": 2000,
     "price": 82,
     "owner": "Market Maker",
-    "timestamp": 1767533356252
+    "timestamp": 1772945947180
   }
 ]

@@ -85,7 +85,7 @@ class AuthService {
 
     redirectIfLoggedIn() {
         if (this.isAuthenticated()) {
-            window.location.href = 'dashboard.html';
+            window.location.href = '/dashboard';
         }
     }
 }

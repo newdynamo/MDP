@@ -62,9 +62,11 @@ companyDisplay.textContent = currentUser.company ? (currentUser.company + (curre
 
 // Router Logic
 function navigate(route) {
-    // Sync URL hash
-    if (window.location.hash !== '#' + route) {
-        window.history.pushState(null, '', '#' + route);
+    // Sync URL pathname
+    const currentPath = window.location.pathname === '/' ? '/dashboard' : window.location.pathname;
+    const targetPath = '/' + route;
+    if (currentPath !== targetPath) {
+        window.history.pushState(null, '', targetPath);
     }
 
     // Update active link
@@ -129,8 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle browser back/forward buttons
     window.addEventListener('popstate', (e) => {
-        const route = window.location.hash.replace('#', '');
-        if (route) {
+        const route = window.location.pathname.replace(/^\/|\/$/g, '');
+        if (route && route !== 'dashboard.html') {
             navigate(route);
         } else {
             navigate('dashboard');
@@ -138,9 +140,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initialize Default View
-    const hashRoute = window.location.hash.replace('#', '');
+    const pathRoute = window.location.pathname.replace(/^\/|\/$/g, '');
     const activeLink = document.querySelector('.nav-link.active');
-    const initialRoute = hashRoute ? hashRoute : (activeLink ? activeLink.dataset.route : 'dashboard');
+    let initialRoute = 'dashboard';
+
+    if (pathRoute && pathRoute !== 'dashboard.html') {
+        initialRoute = pathRoute;
+    } else if (activeLink) {
+        initialRoute = activeLink.dataset.route;
+    }
+
     navigate(initialRoute);
 });
 

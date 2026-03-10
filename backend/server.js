@@ -43,6 +43,16 @@ app.use(express.static(path.join(__dirname, '../frontend')));
     app.use('/api/pooling', poolingRoutes);
     app.use('/api', apiRoutes);
 
+    // --- SPA Fallback for Frontend Routing ---
+    app.get('*', (req, res) => {
+        // Only serve dashboard.html for undefined GET requests that don't look like static assets
+        if (!req.url.startsWith('/api') && !req.url.includes('.')) {
+            res.sendFile(path.join(__dirname, '../frontend/dashboard.html'));
+        } else {
+            res.status(404).send('Not Found');
+        }
+    });
+
     // --- System Graceful Shutdown Endpoint for stop.bat ---
     app.post('/api/system/shutdown', (req, res) => {
         res.json({ success: true, message: 'Shutting down safely...' });

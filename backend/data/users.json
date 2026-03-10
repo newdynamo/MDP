@@ -99,10 +99,10 @@
       "VIEW_REPORTS"
     ],
     "name": "Test User",
-    "company": "Test Co",
+    "company": "Test Corp",
     "email": "test@example.com",
     "phone": "1234567890",
-    "password": "password"
+    "password": "test"
   },
   {
     "id": "user_1767403009888",

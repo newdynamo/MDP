@@ -338,7 +338,7 @@
                 if (result.success) {
                     toast.success('Login successful! Redirecting...');
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '/dashboard';
                     }, 500);
                 } else {
                     toast.error(result.message || 'Login failed');

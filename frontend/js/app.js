@@ -2541,7 +2541,7 @@ window.addFuelRow = function () {
             </td>
             <td class="p-2">
                 <div class="flex items-center gap-2">
-                    <input type="number" class="input-field py-1 px-2 text-sm calc-fuel-amount" placeholder="Amount" step="0.1" required style="width: 100%;">
+                    <input type="number" class="input-field py-1 px-2 text-sm calc-fuel-amount" placeholder="Amount" step="0.01" required style="width: 100%;">
                     <button type="button" class="text-danger hover:text-red-400 font-bold px-2" onclick="removeFuelRow('${rowId}')">✕</button>
                 </div>
             </td>
@@ -2563,10 +2563,10 @@ window.addFuelRow = function () {
                 </select>
             </td>
             <td class="p-2">
-                <input type="number" class="input-field py-1 px-1 text-right w-full calc-nont-eu" placeholder="0" step="0.1" oninput="updateRowCalc(this)">
+                <input type="number" class="input-field py-1 px-1 text-right w-full calc-nont-eu" placeholder="0" step="0.01" oninput="updateRowCalc(this)">
             </td>
             <td class="p-2">
-                <input type="number" class="input-field py-1 px-1 text-right w-full calc-eu" placeholder="0" step="0.1" oninput="updateRowCalc(this)">
+                <input type="number" class="input-field py-1 px-1 text-right w-full calc-eu" placeholder="0" step="0.01" oninput="updateRowCalc(this)">
             </td>
             <td class="p-2 text-center font-bold text-brand calc-total-display">
                 0.0
@@ -2611,7 +2611,7 @@ window.updateRowCalc = function (input) {
     // So "Total Fuel Cons." column IS the Scoped Mass.
 
     const totalScoped = (nonEu * 0.5) + (eu * 1.0);
-    row.querySelector('.calc-total-display').textContent = totalScoped.toFixed(1);
+    row.querySelector('.calc-total-display').textContent = totalScoped.toFixed(2);
 };
 
 window.updateFuelDefaults = function (typeSelect) {

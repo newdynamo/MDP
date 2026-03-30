@@ -335,7 +335,7 @@ class CalculatorService {
                 reductionRate: reduction + '%',
                 ratio: ratio.toFixed(2),
                 rating: rating,
-                totalCO2: totalCO2.toFixed(1)
+                totalCO2: totalCO2.toFixed(2)
             },
             timestamp: Date.now()
         };
@@ -439,15 +439,15 @@ class CalculatorService {
             type: 'EU-ETS',
             input: { fuelList, year, euaPrice },
             result: {
-                totalCO2: totalScopedCO2.toFixed(1), // Display Scoped Total
-                payableCO2: payableCO2.toFixed(1),
+                totalCO2: totalScopedCO2.toFixed(2), // Display Scoped Total
+                payableCO2: payableCO2.toFixed(2),
                 phaseIn: (phaseIn * 100) + '%',
                 estimatedCost: estimatedCost.toFixed(2),
 
                 // Detailed Emissions for Reference
-                'CO2 (CO2e)': emissions.co2.toFixed(1) + ' mT',
-                'CH4 (CO2e)': emissions.ch4.toFixed(1) + ' mT',
-                'N2O (CO2e)': emissions.n2o.toFixed(1) + ' mT'
+                'CO2 (CO2e)': emissions.co2.toFixed(2) + ' mT',
+                'CH4 (CO2e)': emissions.ch4.toFixed(2) + ' mT',
+                'N2O (CO2e)': emissions.n2o.toFixed(2) + ' mT'
             },
             timestamp: Date.now()
         };
@@ -569,8 +569,8 @@ class CalculatorService {
             input: { fuelList, year, euaPrice },
             result: {
                 // ETS Results
-                'Total CO2 (Scoped)': totalScopedCO2.toFixed(1) + ' mT',
-                'ETS Payable': payableCO2.toFixed(1) + ' mT',
+                'Total CO2 (Scoped)': totalScopedCO2.toFixed(2) + ' mT',
+                'ETS Payable': payableCO2.toFixed(2) + ' mT',
                 'ETS Phase-In': (phaseIn * 100).toFixed(0) + '%',
                 'Est. ETS Cost': '€ ' + estimatedCost.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }),
 
@@ -581,9 +581,9 @@ class CalculatorService {
                 'FuelEU Status': balance >= 0 ? 'Surplus (OK)' : 'Deficit (Penalty)',
 
                 // Detailed Breakdown
-                'CO2 Only': emissions.co2.toFixed(1) + ' mT',
-                'CH4 (CO2e)': emissions.ch4.toFixed(1) + ' mT',
-                'N2O (CO2e)': emissions.n2o.toFixed(1) + ' mT'
+                'CO2 Only': emissions.co2.toFixed(2) + ' mT',
+                'CH4 (CO2e)': emissions.ch4.toFixed(2) + ' mT',
+                'N2O (CO2e)': emissions.n2o.toFixed(2) + ' mT'
             },
             timestamp: Date.now()
         };

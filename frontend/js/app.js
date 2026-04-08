@@ -426,7 +426,8 @@ async function renderDashboard() {
             const res = await fetch('/api/trading/history/ets');
             const history = await res.json();
             if (Array.isArray(history) && history.length > 0) {
-                chartData = history;
+                // Ensure data is sorted by time (ascending) so newest is on the right
+                chartData = [...history].sort((a, b) => new Date(a.time) - new Date(b.time));
             }
         } catch (e) {
             console.error("Failed to load ETS history for dashboard", e);
@@ -1335,16 +1336,16 @@ async function renderTradingView(marketData) {
             </div>
              <div class="card" style="height: 300px; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <h3 class="font-bold mb-2 text-sm text-muted" style="position: absolute; top: 1rem; left: 1rem;">MARKET PRICE (${marketData.symbol})</h3>
-                <div style="font-size: 4.5rem; font-weight: 800; line-height: 1; letter-spacing: -2px; color: white; margin-bottom: 0.5rem;">
+                <div style="font-size: 4.5rem; font-weight: 800; line-height: 1; letter-spacing: -2px; color: var(--color-text-main); margin-bottom: 0.5rem;">
                     €${marketData.price.toFixed(2)}
                 </div>
                 <div class="flex items-center gap-3">
-                    <span class="text-muted font-mono" style="background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 6px; font-size: 0.9rem;">
-                        📅 ${marketData.dateString || '--'}
+                    <span class="text-muted font-mono" style="background: var(--bg-glass); padding: 4px 8px; border-radius: 6px; font-size: 0.9rem;">
+                        ${marketData.dateString || '--'}
                     </span>
                     ${(marketData.priceChange || '').includes('-')
-                    ? `<span style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 4px 12px; border-radius: 99px; font-weight: bold; font-size: 0.9rem;">� ${marketData.priceChange}</span>`
-                    : `<span style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; padding: 4px 12px; border-radius: 99px; font-weight: bold; font-size: 0.9rem;">� ${marketData.priceChange}</span>`
+                    ? `<span style="background: rgba(239, 68, 68, 0.15); color: #ef4444; padding: 4px 12px; border-radius: 99px; font-weight: bold; font-size: 0.9rem;">▼ ${marketData.priceChange}</span>`
+                    : `<span style="background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 4px 12px; border-radius: 99px; font-weight: bold; font-size: 0.9rem;">▲ ${marketData.priceChange}</span>`
                 }
                 </div>
             </div>
@@ -1902,7 +1903,8 @@ async function renderTradingView(marketData) {
                     const res = await fetch('/api/trading/history/ets');
                     const history = await res.json();
                     if (Array.isArray(history) && history.length > 0) {
-                        chartData = history;
+                        // Ensure chronological order
+                        chartData = [...history].sort((a, b) => new Date(a.time) - new Date(b.time));
                     }
                 } catch (e) {
                     console.error("Failed to load ETS history", e);

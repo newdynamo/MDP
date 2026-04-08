@@ -18,6 +18,17 @@ class ChartsManager {
         };
     }
 
+    getThemeColors() {
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        return {
+            isDarkMode,
+            text: isDarkMode ? '#ffffff' : '#1e293b',
+            muted: isDarkMode ? '#94a3b8' : '#64748b',
+            grid: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+            cardBg: isDarkMode ? '#1e293b' : '#ffffff'
+        };
+    }
+
     /**
      * Create CO2 emissions trend chart
      * @param {string} canvasId - Canvas element ID
@@ -36,8 +47,7 @@ class ChartsManager {
             }
         }
 
-        const labels = data.map(d => d.month);
-        const values = data.map(d => d.co2);
+        const theme = this.getThemeColors();
 
         this.charts[canvasId] = new Chart(ctx, {
             type: 'line',
@@ -64,7 +74,7 @@ class ChartsManager {
                     legend: {
                         display: true,
                         labels: {
-                            color: '#ffffff',
+                            color: theme.text,
                             font: { size: 13, weight: '500' }
                         }
                     },
@@ -85,17 +95,17 @@ class ChartsManager {
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            color: '#ffffff',
+                            color: theme.text,
                             callback: (value) => value.toLocaleString()
                         },
                         grid: {
-                            color: 'rgba(148, 163, 184, 0.1)'
+                            color: theme.grid
                         }
                     },
                     x: {
-                        ticks: { color: '#ffffff' },
+                        ticks: { color: theme.text },
                         grid: {
-                            color: 'rgba(148, 163, 184, 0.1)'
+                            color: theme.grid
                         }
                     }
                 }
@@ -134,6 +144,10 @@ class ChartsManager {
 
         const totalVessels = values.reduce((a, b) => a + b, 0);
 
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        const mainTextColor = isDarkMode ? '#ffffff' : '#1e293b';
+        const mutedTextColor = isDarkMode ? '#94a3b8' : '#64748b';
+
         // Custom plugin to draw text in center and on segments
         const centerTextPlugin = {
             id: 'centerText',
@@ -156,7 +170,7 @@ class ChartsManager {
                         const x = centerX + Math.cos(midAngle) * radius;
                         const y = centerY + Math.sin(midAngle) * radius;
 
-                        ctx.fillStyle = '#ffffff';
+                        ctx.fillStyle = '#ffffff'; // Always white on colored segments for contrast
                         ctx.font = 'bold 18px sans-serif';
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';
@@ -165,7 +179,7 @@ class ChartsManager {
                 });
 
                 // Draw total in center
-                ctx.fillStyle = '#ffffff';
+                ctx.fillStyle = mainTextColor;
                 ctx.font = 'bold 32px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
@@ -173,7 +187,7 @@ class ChartsManager {
 
                 // Draw "Total Vessels" label
                 ctx.font = '14px sans-serif';
-                ctx.fillStyle = '#94a3b8';
+                ctx.fillStyle = mutedTextColor;
                 ctx.fillText('Total Vessels', centerX, centerY + 20);
 
                 ctx.restore();
@@ -187,7 +201,7 @@ class ChartsManager {
                 datasets: [{
                     data: values,
                     backgroundColor: colors,
-                    borderColor: '#1e293b',
+                    borderColor: isDarkMode ? '#1e293b' : '#ffffff',
                     borderWidth: 2,
                     hoverOffset: 10
                 }]
@@ -199,15 +213,15 @@ class ChartsManager {
                     legend: {
                         position: 'bottom',
                         labels: {
-                            color: '#ffffff', // White for maximum visibility
+                            color: mainTextColor,
                             padding: 15,
-                            font: { size: 14, weight: 'bold' }, // Larger and bolder
+                            font: { size: 14, weight: 'bold' },
                             generateLabels: (chart) => {
                                 const data = chart.data;
                                 return data.labels.map((label, i) => ({
                                     text: `${label}: ${data.datasets[0].data[i]} vessels`,
                                     fillStyle: data.datasets[0].backgroundColor[i],
-                                    fontColor: '#ffffff', // Explicit white color
+                                    fontColor: mainTextColor,
                                     hidden: false,
                                     index: i
                                 }));
@@ -300,6 +314,8 @@ class ChartsManager {
             }
         };
 
+        const theme = this.getThemeColors();
+
         this.charts[canvasId] = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -343,16 +359,16 @@ class ChartsManager {
                     x: {
                         beginAtZero: true,
                         ticks: {
-                            color: '#ffffff',
+                            color: theme.text,
                             callback: (value) => value.toLocaleString()
                         },
                         grid: {
-                            color: 'rgba(148, 163, 184, 0.1)'
+                            color: theme.grid
                         }
                     },
                     y: {
                         ticks: {
-                            color: '#ffffff',
+                            color: theme.text,
                             font: { size: 12 }
                         },
                         grid: {
@@ -497,7 +513,7 @@ class ChartsManager {
                     }
                 },
                 plugins: {
-                    legend: { labels: { color: '#fff' } },
+                    legend: { labels: { color: this.getThemeColors().text } },
                     tooltip: {
                         mode: 'index',
                         intersect: false,
@@ -542,6 +558,8 @@ class ChartsManager {
             const sum = prices.slice(i - 4, i + 1).reduce((a, b) => a + b, 0);
             sma.push(sum / 5);
         }
+
+        const theme = this.getThemeColors();
 
         this.charts[canvasId] = new Chart(ctx, {
             type: 'line',
@@ -591,12 +609,12 @@ class ChartsManager {
                         display: false // Hide X axis labels for cleaner look in small widgets
                     },
                     y: {
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: '#94a3b8' }
+                        grid: { color: theme.grid },
+                        ticks: { color: theme.muted }
                     }
                 },
                 plugins: {
-                    legend: { display: true, labels: { color: '#94a3b8', font: { size: 10 } } },
+                    legend: { display: true, labels: { color: theme.muted, font: { size: 10 } } },
                     tooltip: {
                         mode: 'index',
                         intersect: false

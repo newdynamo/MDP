@@ -14,9 +14,10 @@
     <header class="landing-header">
         <div class="flex items-center gap-2">
             <div style="width: 40px; height: 40px; background: var(--color-primary); border-radius: 50%;"></div>
-            <span style="font-size: 1.5rem; font-weight: 800; color: white;">Co-Fleeter</span>
+            <span style="font-size: 1.5rem; font-weight: 800; color: var(--color-text-main);">Co-Fleeter</span>
         </div>
         <div class="flex items-center gap-4">
+            <button id="theme-toggle" class="btn btn-outline" style="padding: 0.5rem; min-width: 60px;">Dark</button>
             <button id="lang-toggle" class="btn btn-outline" style="padding: 0.5rem; min-width: 60px;">KR</button>
             <button id="open-login-btn" class="btn btn-primary" data-i18n="login_btn">Login / Register</button>
         </div>
@@ -436,6 +437,26 @@
         langToggleBtn.addEventListener('click', () => {
             currentLang = currentLang === 'en' ? 'ko' : 'en';
             updateLanguage();
+        });
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        // Default is Light mode, so we only apply dark mode class if stored pref says 'dark'
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggleBtn.textContent = 'Light';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.textContent = 'Light';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.textContent = 'Dark';
+            }
         });
     </script>
 </body>

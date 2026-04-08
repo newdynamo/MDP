@@ -368,9 +368,9 @@ async function renderDashboard() {
              <div class="card">
                 <h3 class="font-bold mb-4">Quick Actions</h3>
                 <div class="flex flex-col gap-2">
-                    <button class="btn btn-outline w-full" style="justify-content: flex-start;" onclick="navigate('fleet')">🚢 Manage Fleet</button>
-                    <button class="btn btn-outline w-full" style="justify-content: flex-start;" onclick="navigate('calculator')">🧮 Run Calculator</button>
-                    <button class="btn btn-outline w-full" style="justify-content: flex-start;" onclick="navigate('trading-ets')">📈 View Market</button>
+                    <button class="btn btn-outline w-full" style="justify-content: flex-start;" onclick="navigate('fleet')">Manage Fleet</button>
+                    <button class="btn btn-outline w-full" style="justify-content: flex-start;" onclick="navigate('calculator')">Run Calculator</button>
+                    <button class="btn btn-outline w-full" style="justify-content: flex-start;" onclick="navigate('trading-ets')">View Market</button>
                 </div>
             </div>
         </div>
@@ -470,11 +470,11 @@ async function renderFleet() {
                 ${currentUser.role === 'ADMIN' ? '<span class="badge" style="background:var(--color-accent); color:black; padding:2px 8px; border-radius:10px; font-size:0.8rem;">ADMIN MODE</span>' : ''}
                 
                 <!-- Import/Export Tools -->
-                <button onclick="handleDownloadTemplate()" class="btn btn-sm btn-outline" title="Download Excel Template">📄 Template</button>
-                <button onclick="document.getElementById('import-file').click()" class="btn btn-sm btn-outline" title="Import from Excel">📥 Import</button>
+                <button onclick="handleDownloadTemplate()" class="btn btn-sm btn-outline" title="Download Excel Template">Template</button>
+                <button onclick="document.getElementById('import-file').click()" class="btn btn-sm btn-outline" title="Import from Excel">Import</button>
                 <input type="file" id="import-file" accept=".xlsx, .xls" class="hidden" onchange="handleImportFleet(event)">
                 
-                ${fleet.length > 0 ? '<button onclick="handleExportFleet()" class="btn btn-sm btn-outline">📊 Export</button>' : ''}
+                ${fleet.length > 0 ? '<button onclick="handleExportFleet()" class="btn btn-sm btn-outline">Export</button>' : ''}
                 ${currentUser.role !== 'ADMIN' ? '<button onclick="openVesselModal()" class="btn btn-sm btn-primary">+ Register</button>' : ''}
             </div>
         </div>
@@ -1343,8 +1343,8 @@ async function renderTradingView(marketData) {
                         📅 ${marketData.dateString || '--'}
                     </span>
                     ${(marketData.priceChange || '').includes('-')
-                    ? `<span style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 4px 12px; border-radius: 99px; font-weight: bold; font-size: 0.9rem;">📉 ${marketData.priceChange}</span>`
-                    : `<span style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; padding: 4px 12px; border-radius: 99px; font-weight: bold; font-size: 0.9rem;">📈 ${marketData.priceChange}</span>`
+                    ? `<span style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 4px 12px; border-radius: 99px; font-weight: bold; font-size: 0.9rem;">� ${marketData.priceChange}</span>`
+                    : `<span style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; padding: 4px 12px; border-radius: 99px; font-weight: bold; font-size: 0.9rem;">� ${marketData.priceChange}</span>`
                 }
                 </div>
             </div>
@@ -1952,8 +1952,8 @@ function renderTradingHistory() {
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-bold">Trading History</h2>
             <div class="flex gap-2">
-                ${history.length > 0 ? '<button onclick="handleExportTradingHistory()" class="btn btn-outline">📊 Export CSV</button>' : ''}
-                <button onclick="handleClearTradingHistory()" class="btn btn-outline">🗑️ Clear History</button>
+                ${history.length > 0 ? '<button onclick="handleExportTradingHistory()" class="btn btn-outline">Export CSV</button>' : ''}
+                <button onclick="handleClearTradingHistory()" class="btn btn-outline">�Clear History</button>
             </div>
         </div>
 
@@ -2102,7 +2102,7 @@ function renderReports() {
     contentArea.innerHTML = `
         <h2 class="text-lg font-bold mb-4">Compliance Reports</h2>
         <div class="card text-center p-8">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">📄</div>
+            <div style="font-size: 3rem; margin-bottom: 1rem;">�</div>
             <h3 class="font-bold">Reports Module</h3>
             <p class="text-muted mt-2">Generate Verifier-ready PDF reports for EU-ETS and DCS.</p>
             <button class="btn btn-outline mt-4">Generate 2024 Report</button>
@@ -2731,13 +2731,13 @@ window.handleCalculate = function (e) {
             <div class="mt-4 pt-2 border-t border-gray-600">
                 <div class="flex gap-2 mb-2">
                     <button onclick="handleExportPDF()" class="btn btn-outline flex-1" style="font-size: 0.85rem; padding: 0.5rem;">
-                        📄 Export PDF
+                        �Export PDF
                     </button>
                     <button onclick="handleExportExcel()" class="btn btn-outline flex-1" style="font-size: 0.85rem; padding: 0.5rem;">
-                        📊 Export Excel
+                        �Export Excel
                     </button>
                 </div>
-                <button onclick="handleSave()" class="btn btn-success w-full" id="btn-save-result">💾 Save to History</button>
+                <button onclick="handleSave()" class="btn btn-success w-full" id="btn-save-result">Save to History</button>
             </div>
         `;
 
@@ -3405,13 +3405,13 @@ async function renderAdmin() {
         <!-- Admin Tabs -->
         <div class="flex gap-4 mb-6 border-b border-gray-700">
             <button id="tab-btn-email" class="px-4 py-2 border-b-2 border-primary font-bold text-white transition-colors" onclick="switchAdminTab('email')">
-                📧 E-mail Management
+                �E-mail Management
             </button>
             <button id="tab-btn-data" class="px-4 py-2 border-b-2 border-transparent text-muted hover:text-white transition-colors" onclick="switchAdminTab('data')">
-                📊 Data Management
+                �Data Management
             </button>
             <button id="tab-btn-users" class="px-4 py-2 border-b-2 border-transparent text-muted hover:text-white transition-colors" onclick="switchAdminTab('users')">
-                👥 User Management
+                �User Management
             </button>
         </div>
 
@@ -3594,8 +3594,8 @@ async function renderAdmin() {
                          <h3 class="font-bold mb-2">Sync Source</h3>
                          <p class="text-sm text-muted mb-4">Sync data from Google Sheet.<br><b class="text-warning">Warning: Overwrites manual edits!</b></p>
                          <div class="flex flex-col gap-2">
-                            <button onclick="refreshFuelData()" class="btn btn-outline text-sm w-full">🔄 Refresh cf-CII (Fuel)</button>
-                            <button onclick="refreshEUData()" class="btn btn-outline text-sm w-full">🔄 Refresh cf-EU (ETS/FuelEU)</button>
+                            <button onclick="refreshFuelData()" class="btn btn-outline text-sm w-full">Refresh cf-CII (Fuel)</button>
+                            <button onclick="refreshEUData()" class="btn btn-outline text-sm w-full">Refresh cf-EU (ETS/FuelEU)</button>
                          </div>
                     </div>
 
@@ -3605,13 +3605,13 @@ async function renderAdmin() {
                         <p class="text-xs text-muted mb-4">Export all server data to a JSON file or restore from a backup.</p>
                         
                         <div class="flex flex-col gap-2">
-                            <button onclick="handleDownloadBackup()" class="btn btn-sm btn-outline border-white text-white">⬇️ Download Data Backup</button>
+                            <button onclick="handleDownloadBackup()" class="btn btn-sm btn-outline border-white text-white">⬇Download Data Backup</button>
                             
                             <hr class="border-white/10 my-2">
                             
                             <div class="flex gap-2 items-center">
                                 <input type="file" id="backup-file-input" accept=".json" class="text-xs text-muted w-full">
-                                <button onclick="handleRestoreBackup()" class="btn btn-sm btn-danger whitespace-nowrap">⬆️ Restore</button>
+                                <button onclick="handleRestoreBackup()" class="btn btn-sm btn-danger whitespace-nowrap">⬆Restore</button>
                             </div>
                             <div class="text-[10px] text-muted text-center mt-1">
                                 Warning: Restore will overwrite existing data!
@@ -3680,8 +3680,8 @@ async function renderAdmin() {
                         <p class="text-xs text-muted mb-4">Combined view of Google Sheet data and Manual Overrides.</p>
                         
                         <div class="flex gap-2 mb-4">
-                            <button class="btn btn-sm btn-outline flex-1" onclick="handleRefreshEUASheet()">☁️ Refresh Sheet</button>
-                            <button class="btn btn-sm btn-outline flex-1" onclick="loadEffectiveEUAHistory()">🔄 Load Full History</button>
+                            <button class="btn btn-sm btn-outline flex-1" onclick="handleRefreshEUASheet()">☁Refresh Sheet</button>
+                            <button class="btn btn-sm btn-outline flex-1" onclick="loadEffectiveEUAHistory()">Load Full History</button>
                         </div>
 
                         <div id="effective-eua-container" style="max-height: 300px; overflow-y: auto; overflow-x: auto; display: none;">
@@ -3713,10 +3713,10 @@ async function renderAdmin() {
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="font-bold text-success">cf-EU Data Management (ETS/FuelEU)</h3>
                             <div id="eu-actions">
-                                <button id="btn-edit-eu" class="btn btn-sm btn-outline" onclick="enableEUEdit()">✏️ Edit Data</button>
+                                <button id="btn-edit-eu" class="btn btn-sm btn-outline" onclick="enableEUEdit()">✏Edit Data</button>
                                 <div id="eu-edit-controls" class="hidden flex gap-2">
                                      <button class="btn btn-sm btn-outline text-danger" onclick="cancelEUEdit()">Cancel</button>
-                                     <button class="btn btn-sm btn-success" onclick="saveEUChanges()">💾 Save Changes</button>
+                                     <button class="btn btn-sm btn-success" onclick="saveEUChanges()">Save Changes</button>
                                 </div>
                             </div>
                         </div>
@@ -3731,10 +3731,10 @@ async function renderAdmin() {
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="font-bold text-primary">cf-CII Data Management (Fuel)</h3>
                             <div id="fuel-actions">
-                                <button id="btn-edit-fuel" class="btn btn-sm btn-outline" onclick="enableFuelEdit()">✏️ Edit Data</button>
+                                <button id="btn-edit-fuel" class="btn btn-sm btn-outline" onclick="enableFuelEdit()">✏Edit Data</button>
                                 <div id="edit-controls" class="hidden flex gap-2">
                                      <button class="btn btn-sm btn-outline text-danger" onclick="cancelFuelEdit()">Cancel</button>
-                                     <button class="btn btn-sm btn-success" onclick="saveFuelChanges()">💾 Save Changes</button>
+                                     <button class="btn btn-sm btn-success" onclick="saveFuelChanges()">Save Changes</button>
                                 </div>
                             </div>
                         </div>
@@ -3781,13 +3781,13 @@ async function renderAdmin() {
                                             ${u.suspended ? '✅ Active' : '⛔ Stop'}
                                         </button>
                                         <button onclick="openPermissionModal('${u.id}', '${u.name}', '${(u.permissions || []).join(',')}')" class="btn btn-xs btn-outline" title="Manage Permissions">
-                                            🔒 Perms
+                                            �Perms
                                         </button>
                                         <button onclick="handleResetPassword('${u.id}')" class="btn btn-xs btn-outline text-warning" title="Reset Password" ${u.role === 'ADMIN' && u.email.includes('cfadmin') ? 'disabled' : ''}>
-                                            🔑 Reset PW
+                                            �Reset PW
                                         </button>
                                         <button onclick="handleDeleteUser('${u.id}')" class="btn btn-xs btn-outline text-danger" title="Delete User" ${u.role === 'ADMIN' && u.email.includes('cfadmin') ? 'disabled' : ''}>
-                                            🗑️ Del
+                                            🗑Del
                                         </button>
                                     </td>
                                 </tr>
@@ -4589,7 +4589,7 @@ window.loadEffectiveEUAHistory = async function () {
     }
 
     btn.disabled = false;
-    btn.innerHTML = '🔄 Load Full History';
+    btn.innerHTML = 'Load Full History';
 };
 
 window.loadCurrentEUAPrice = async function () {

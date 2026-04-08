@@ -197,7 +197,7 @@
     "name": "Test User",
     "company": "Test Co",
     "email": "test@test.com",
-    "phone": "12345678",
-    "password": "password123"
+    "phone": "1234567890",
+    "password": "password"
   }
 ]

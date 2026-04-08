@@ -1,7 +1,9 @@
 {
-  "service": "gmail",
+  "host": "smtps.hiworks.com",
+  "port": 465,
+  "secure": true,
   "auth": {
-    "user": "newdynamo@gmail.com",
-    "pass": "ftvi pmnw qlks hjwk"
+    "user": "decarbon@decarva.co.kr",
+    "pass": "decarb0nizer#"
   }
 }

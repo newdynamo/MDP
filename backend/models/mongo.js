@@ -26,5 +26,6 @@ module.exports = {
     connectDB,
     User,
     Fleet,
-    GlobalData
+    GlobalData,
+    mongoose
 };

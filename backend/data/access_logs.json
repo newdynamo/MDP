@@ -1942,5 +1942,137 @@
     "email": "test@example.com",
     "timestamp": 1773112556111,
     "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1774313945625,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1774321605259,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1774321605287,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1774860472998,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1774860730828,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1775452667965,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1775452781944,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775618665335,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775618665358,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775619440920,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1775619602284,
+    "ip": "::1"
+  },
+  {
+    "userId": "admin_cf",
+    "email": "cfadmin@cofleeter.com",
+    "timestamp": 1775619602307,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775621187602,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775621187624,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775622390951,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775622390964,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775624067105,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775624067129,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775624586749,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775624586759,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775630843427,
+    "ip": "::1"
+  },
+  {
+    "userId": "user_1766379265593",
+    "email": "jshan@hls.co.kr",
+    "timestamp": 1775630843442,
+    "ip": "::1"
   }
 ]

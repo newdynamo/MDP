@@ -29,7 +29,9 @@ const db = {
     emailConfig: {
         service: 'gmail',
         auth: { user: '', pass: '' }
-    }
+    },
+    resources: [],
+    posts: []
 };
 
 // --- Persistence Helpers ---
@@ -93,6 +95,8 @@ async function loadAll() {
     db.orders = loadJSON(paths.ORDERS_FILE, []);
     db.trades = loadJSON(paths.TRADES_FILE, []);
     db.pools = loadJSON(paths.POOLS_FILE, []);
+    db.resources = loadJSON(paths.RESOURCES_FILE, []);
+    db.posts = loadJSON(paths.POSTS_FILE, []);
 
     // 2. Try MongoDB Connection
     if (process.env.MONGO_URI) {
@@ -117,6 +121,8 @@ async function loadAll() {
                     else if (k === 'trades') db.trades = doc.data;
                     else if (k === 'pools') db.pools = doc.data;
                     else if (k === 'emailConfig') db.emailConfig = doc.data;
+                    else if (k === 'resources') db.resources = doc.data;
+                    else if (k === 'posts') db.posts = doc.data;
                 });
                 console.log("MongoDB Sync Complete.");
             } catch (e) {
@@ -204,7 +210,9 @@ const save = {
         saveToMongo('trades', db.trades);
     },
     pools: () => { saveJSON(paths.POOLS_FILE, db.pools); saveToMongo('pools', db.pools); },
-    emailConfig: () => { saveJSON(paths.EMAIL_CONFIG_FILE, db.emailConfig); saveToMongo('emailConfig', db.emailConfig); }
+    emailConfig: () => { saveJSON(paths.EMAIL_CONFIG_FILE, db.emailConfig); saveToMongo('emailConfig', db.emailConfig); },
+    resources: () => { saveJSON(paths.RESOURCES_FILE, db.resources); saveToMongo('resources', db.resources); },
+    posts: () => { saveJSON(paths.POSTS_FILE, db.posts); saveToMongo('posts', db.posts); }
 };
 
 module.exports = {

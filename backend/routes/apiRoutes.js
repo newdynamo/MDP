@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const dataController = require('../controllers/dataController');
 const authController = require('../controllers/authController');
+const resourceController = require('../controllers/resourceController');
 
 // Fleets
 router.get('/data/fleets', dataController.getFleets);
@@ -24,5 +25,10 @@ router.post('/data/refresh-eu-data', dataController.refreshEuData);
 router.post('/user/profile', authController.updateProfile); // Moved here to match /api/user/profile prefix if mounted at /api
 router.get('/user/calculations', dataController.getUserCalculations);
 router.post('/user/calculations', dataController.saveUserCalculation);
+
+// Resources (Reference Library)
+router.get('/resources', resourceController.getResources);
+router.post('/resources', resourceController.addResource);
+router.delete('/resources/:id', resourceController.deleteResource);
 
 module.exports = router;

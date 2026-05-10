@@ -112,6 +112,9 @@ function navigate(route) {
         case 'trading-history': renderTradingHistory(); break; // Implied VIEW_MARKET? Or separate? Let's bind to VIEW_MARKET.
         case 'reports': renderReports(); break;
         case 'calculator': renderCalculator(); break;
+        case 'resources': renderResources(); break;
+        case 'board': renderBoard(); break;
+        case 'board-detail': renderBoardDetail(window.__currentBoardPostId); break;
         case 'mypage': renderMyPage(); break;
         case 'admin': renderAdmin(); break;
         default: console.error('Unknown route:', route);
@@ -168,6 +171,409 @@ window.refreshDashboardIfNeeded = async function () {
 
 
 // --- View Renderers ---
+
+function escapeHtmlAttr(str) {
+    return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+async function renderResources() {
+    const canManage = hasPermission(PERMISSIONS.VIEW_ADMIN);
+
+    contentArea.innerHTML = '<div class="text-center p-8">Loading resources...</div>';
+    const list = await resourceService.list();
+
+    const grouped = {};
+    list.forEach(r => {
+        const cat = r.category || 'Uncategorized';
+        if (!grouped[cat]) grouped[cat] = [];
+        grouped[cat].push(r);
+    });
+
+    const categoryOrder = ['CII', 'EU-ETS', 'FuelEU'];
+    const categories = Object.keys(grouped).sort((a, b) => {
+        const ai = categoryOrder.indexOf(a);
+        const bi = categoryOrder.indexOf(b);
+        if (ai === -1 && bi === -1) return a.localeCompare(b);
+        if (ai === -1) return 1;
+        if (bi === -1) return -1;
+        return ai - bi;
+    });
+
+    const groupsHtml = categories.length === 0
+        ? '<div class="text-muted p-4 text-center">No resources yet.</div>'
+        : categories.map(cat => `
+            <div class="card mb-4">
+                <h3 class="font-bold mb-3 border-b border-white/10 pb-2">${escapeHtmlAttr(cat)}</h3>
+                <ul class="space-y-2">
+                    ${grouped[cat].map(r => `
+                        <li class="flex items-start gap-3 py-1">
+                            <div class="flex-1">
+                                <a href="${escapeHtmlAttr(r.url)}" target="_blank" rel="noopener noreferrer"
+                                    class="standard-code font-bold text-primary hover:underline">${escapeHtmlAttr(r.code)}</a>
+                                ${r.description ? `<span class="text-sm text-muted"> ${escapeHtmlAttr(r.description)}</span>` : ''}
+                            </div>
+                            ${canManage ? `<button onclick="handleDeleteResource('${escapeHtmlAttr(r.id)}')" class="btn btn-sm btn-outline" style="color:var(--color-danger);">Delete</button>` : ''}
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+        `).join('');
+
+    const addFormHtml = canManage ? `
+        <div class="card mb-6">
+            <h3 class="font-bold mb-3 border-b border-white/10 pb-2">Add Resource</h3>
+            <form onsubmit="handleAddResource(event)" class="space-y-3">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="input-label">Category *</label>
+                        <select name="categorySelect" class="input-field" onchange="handleCategorySelectChange(this)" required>
+                            ${categories.map(c => `<option value="${escapeHtmlAttr(c)}">${escapeHtmlAttr(c)}</option>`).join('')}
+                            <option value="__new__">+ Add new category...</option>
+                        </select>
+                        <input type="text" name="categoryNew" class="input-field hidden mt-2" placeholder="Enter new category name" maxlength="50">
+                    </div>
+                    <div>
+                        <label class="input-label">Code / Title *</label>
+                        <input type="text" name="code" class="input-field" required placeholder="e.g. Resolution MEPC.352(78)">
+                    </div>
+                </div>
+                <div>
+                    <label class="input-label">Description</label>
+                    <input type="text" name="description" class="input-field" placeholder="Short description (optional)">
+                </div>
+                <div>
+                    <label class="input-label">URL *</label>
+                    <input type="url" name="url" class="input-field" required placeholder="https://...">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Resource</button>
+            </form>
+        </div>
+    ` : '';
+
+    contentArea.innerHTML = `
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-lg font-bold">Resources</h2>
+                    <p class="text-xs text-muted">Reference standards and regulations.</p>
+                </div>
+                ${canManage ? '<span class="badge bg-primary/20 text-primary">Admin: Add / Delete enabled</span>' : ''}
+            </div>
+            ${addFormHtml}
+            ${groupsHtml}
+        </div>
+    `;
+
+    window.handleCategorySelectChange = function (selectEl) {
+        const newInput = selectEl.form.querySelector('input[name="categoryNew"]');
+        if (selectEl.value === '__new__') {
+            newInput.classList.remove('hidden');
+            newInput.required = true;
+            newInput.focus();
+        } else {
+            newInput.classList.add('hidden');
+            newInput.required = false;
+            newInput.value = '';
+        }
+    };
+
+    window.handleAddResource = async function (event) {
+        event.preventDefault();
+        const form = event.target;
+
+        const selectVal = form.categorySelect.value;
+        let category = selectVal === '__new__' ? form.categoryNew.value.trim() : selectVal;
+
+        if (!category) {
+            toast.error('Please select or enter a category.');
+            return;
+        }
+
+        const payload = {
+            category,
+            code: form.code.value.trim(),
+            description: form.description.value.trim(),
+            url: form.url.value.trim()
+        };
+        const result = await resourceService.add(payload);
+        if (result.success) {
+            toast.success('Resource added');
+            renderResources();
+        } else {
+            toast.error(result.message || 'Failed to add');
+        }
+    };
+
+    window.handleDeleteResource = async function (id) {
+        if (!confirm('Delete this resource?')) return;
+        const result = await resourceService.remove(id);
+        if (result.success) {
+            toast.success('Resource deleted');
+            renderResources();
+        } else {
+            toast.error(result.message || 'Failed to delete');
+        }
+    };
+}
+
+// ===== BOARD =====
+
+function formatBoardDate(ts) {
+    if (!ts) return '';
+    const d = new Date(ts);
+    const pad = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+function renderAttachmentList(attachments) {
+    if (!attachments || attachments.length === 0) return '';
+    return `
+        <div class="mt-2 flex flex-wrap gap-2">
+            ${attachments.map(a => `
+                <a href="${escapeHtmlAttr(boardService.fileUrl(a.fileId))}" target="_blank" rel="noopener noreferrer"
+                    class="badge bg-primary/10 text-primary text-xs px-2 py-1" style="border:1px solid var(--color-border);">
+                    📎 ${escapeHtmlAttr(a.filename)} <span class="text-muted">(${formatFileSize(a.size)})</span>
+                </a>
+            `).join('')}
+        </div>`;
+}
+
+async function renderBoard() {
+    contentArea.innerHTML = '<div class="text-center p-8">Loading board...</div>';
+    const posts = await boardService.list();
+
+    const rowsHtml = posts.length === 0
+        ? '<tr><td colspan="5" class="text-center text-muted p-6">No posts yet. Be the first to write!</td></tr>'
+        : posts.map(p => `
+            <tr class="hover:bg-white/5 cursor-pointer" onclick="openBoardPost('${escapeHtmlAttr(p.id)}')">
+                <td class="p-2">
+                    ${escapeHtmlAttr(p.title)}
+                    ${p.replyCount > 0 ? `<span class="text-primary text-xs ml-1">[${p.replyCount}]</span>` : ''}
+                    ${p.attachmentCount > 0 ? `<span class="text-muted text-xs ml-1">📎${p.attachmentCount}</span>` : ''}
+                </td>
+                <td class="p-2 text-sm">${escapeHtmlAttr(p.authorName || '-')}</td>
+                <td class="p-2 text-sm text-muted">${escapeHtmlAttr(formatBoardDate(p.createdAt))}</td>
+                <td class="p-2 text-sm text-center">${p.replyCount}</td>
+                <td class="p-2 text-center">
+                    <button class="btn btn-sm btn-outline" onclick="event.stopPropagation(); openBoardPost('${escapeHtmlAttr(p.id)}')">View</button>
+                </td>
+            </tr>
+        `).join('');
+
+    contentArea.innerHTML = `
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-lg font-bold">Board</h2>
+                    <p class="text-xs text-muted">Discussions, announcements, and Q&amp;A.</p>
+                </div>
+                <button class="btn btn-primary" onclick="toggleBoardWriteForm()">+ New Post</button>
+            </div>
+
+            <div id="board-write-form" class="card mb-4 hidden">
+                <h3 class="font-bold mb-3 border-b border-white/10 pb-2">Write Post</h3>
+                <form onsubmit="handleCreatePost(event)" class="space-y-3">
+                    <div>
+                        <label class="input-label">Title *</label>
+                        <input type="text" name="title" class="input-field" required maxlength="200" placeholder="Post title">
+                    </div>
+                    <div>
+                        <label class="input-label">Body *</label>
+                        <textarea name="body" class="input-field" rows="6" required maxlength="10000" placeholder="Write your message..."></textarea>
+                    </div>
+                    <div>
+                        <label class="input-label">Attachments (optional, max 5 files / 5MB each)</label>
+                        <input type="file" name="files" multiple class="input-field">
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-outline" onclick="toggleBoardWriteForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-white/10 text-left text-muted">
+                            <th class="p-2">Title</th>
+                            <th class="p-2">Author</th>
+                            <th class="p-2">Date</th>
+                            <th class="p-2 text-center">Replies</th>
+                            <th class="p-2 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rowsHtml}</tbody>
+                </table>
+            </div>
+        </div>
+    `;
+
+    window.toggleBoardWriteForm = function () {
+        const f = document.getElementById('board-write-form');
+        if (f) f.classList.toggle('hidden');
+    };
+
+    window.handleCreatePost = async function (event) {
+        event.preventDefault();
+        const form = event.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const files = Array.from(form.files.files || []);
+
+        await loading.wrapButton(submitBtn, async () => {
+            const result = await boardService.create(currentUser, {
+                title: form.title.value.trim(),
+                body: form.body.value.trim(),
+                files
+            });
+            if (result.success) {
+                toast.success('Post created');
+                renderBoard();
+            } else {
+                toast.error(result.message || 'Failed to create post');
+            }
+        });
+    };
+
+    window.openBoardPost = function (id) {
+        window.__currentBoardPostId = id;
+        window.history.pushState(null, '', '/board-detail');
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const boardLink = document.querySelector('.nav-link[data-route="board"]');
+        if (boardLink) boardLink.classList.add('active');
+        renderBoardDetail(id);
+    };
+}
+
+async function renderBoardDetail(postId) {
+    if (!postId) {
+        navigate('board');
+        return;
+    }
+
+    contentArea.innerHTML = '<div class="text-center p-8">Loading post...</div>';
+    const post = await boardService.get(postId);
+
+    if (!post) {
+        contentArea.innerHTML = `
+            <div class="max-w-3xl mx-auto">
+                <button class="btn btn-outline mb-4" onclick="navigate('board')">← Back to Board</button>
+                <div class="card text-center text-muted">Post not found.</div>
+            </div>`;
+        return;
+    }
+
+    const isAuthor = currentUser && currentUser.id === post.authorId;
+    const isAdmin = currentUser && currentUser.role === 'ADMIN';
+    const canDeletePost = isAuthor || isAdmin;
+
+    const repliesHtml = (post.replies || []).map(r => {
+        const canDeleteReply = (currentUser && currentUser.id === r.authorId) || isAdmin;
+        return `
+            <div class="card mb-2" style="background: rgba(255,255,255,0.03);">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="text-sm">
+                        <span class="font-bold">${escapeHtmlAttr(r.authorName || '-')}</span>
+                        <span class="text-muted ml-2 text-xs">${escapeHtmlAttr(formatBoardDate(r.createdAt))}</span>
+                    </div>
+                    ${canDeleteReply ? `<button class="btn btn-sm btn-outline" style="color:var(--color-danger);" onclick="handleDeleteReply('${escapeHtmlAttr(post.id)}','${escapeHtmlAttr(r.id)}')">Delete</button>` : ''}
+                </div>
+                <div class="text-sm whitespace-pre-wrap">${escapeHtmlAttr(r.body)}</div>
+                ${renderAttachmentList(r.attachments)}
+            </div>
+        `;
+    }).join('') || '<div class="text-muted text-sm text-center p-3">No replies yet.</div>';
+
+    contentArea.innerHTML = `
+        <div class="max-w-3xl mx-auto">
+            <button class="btn btn-outline mb-4" onclick="navigate('board')">← Back to Board</button>
+
+            <div class="card mb-4">
+                <div class="flex items-start justify-between mb-3 border-b border-white/10 pb-3">
+                    <div>
+                        <h2 class="text-lg font-bold">${escapeHtmlAttr(post.title)}</h2>
+                        <div class="text-xs text-muted mt-1">
+                            ${escapeHtmlAttr(post.authorName || '-')} · ${escapeHtmlAttr(formatBoardDate(post.createdAt))}
+                        </div>
+                    </div>
+                    ${canDeletePost ? `<button class="btn btn-sm btn-outline" style="color:var(--color-danger);" onclick="handleDeletePost('${escapeHtmlAttr(post.id)}')">Delete</button>` : ''}
+                </div>
+                <div class="text-sm whitespace-pre-wrap">${escapeHtmlAttr(post.body)}</div>
+                ${renderAttachmentList(post.attachments)}
+            </div>
+
+            <h3 class="font-bold mb-2 text-sm">Replies (${(post.replies || []).length})</h3>
+            <div class="mb-4">${repliesHtml}</div>
+
+            <div class="card">
+                <h3 class="font-bold mb-3 border-b border-white/10 pb-2">Write Reply</h3>
+                <form onsubmit="handleCreateReply(event, '${escapeHtmlAttr(post.id)}')" class="space-y-3">
+                    <div>
+                        <textarea name="body" class="input-field" rows="3" required maxlength="10000" placeholder="Write a reply..."></textarea>
+                    </div>
+                    <div>
+                        <label class="input-label text-xs">Attachments (optional, max 5 files / 5MB each)</label>
+                        <input type="file" name="files" multiple class="input-field">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Reply</button>
+                </form>
+            </div>
+        </div>
+    `;
+
+    window.handleCreateReply = async function (event, pid) {
+        event.preventDefault();
+        const form = event.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const files = Array.from(form.files.files || []);
+
+        await loading.wrapButton(submitBtn, async () => {
+            const result = await boardService.reply(currentUser, pid, {
+                body: form.body.value.trim(),
+                files
+            });
+            if (result.success) {
+                toast.success('Reply posted');
+                renderBoardDetail(pid);
+            } else {
+                toast.error(result.message || 'Failed to post reply');
+            }
+        });
+    };
+
+    window.handleDeletePost = async function (pid) {
+        if (!confirm('Delete this post? All replies and attachments will be removed.')) return;
+        const result = await boardService.remove(currentUser, pid);
+        if (result.success) {
+            toast.success('Post deleted');
+            navigate('board');
+        } else {
+            toast.error(result.message || 'Failed to delete');
+        }
+    };
+
+    window.handleDeleteReply = async function (pid, rid) {
+        if (!confirm('Delete this reply?')) return;
+        const result = await boardService.removeReply(currentUser, pid, rid);
+        if (result.success) {
+            toast.success('Reply deleted');
+            renderBoardDetail(pid);
+        } else {
+            toast.error(result.message || 'Failed to delete');
+        }
+    };
+}
 
 async function renderMyPage() {
     contentArea.innerHTML = `

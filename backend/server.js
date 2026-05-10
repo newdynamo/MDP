@@ -11,6 +11,7 @@ const apiRoutes = require('./routes/apiRoutes');
 const tradingRoutes = require('./routes/tradingRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const poolingRoutes = require('./routes/poolingRoutes');
+const boardRoutes = require('./routes/boardRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
     app.use('/api/trading', tradingRoutes);
     app.use('/api/admin', adminRoutes);
     app.use('/api/pooling', poolingRoutes);
+    app.use('/api/board', boardRoutes);
     app.use('/api', apiRoutes);
 
     // --- SPA Fallback for Frontend Routing ---
@@ -83,6 +85,8 @@ app.use(express.static(path.join(__dirname, '../frontend')));
                 store.save.trading();
                 store.save.pools();
                 store.save.emailConfig();
+                store.save.resources();
+                store.save.posts();
             }
             console.log('[System] All data saved successfully. Server stopping now.');
         } catch (error) {

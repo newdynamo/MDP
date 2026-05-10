@@ -1,0 +1,90 @@
+[
+  {
+    "id": "res_seed_cii_1",
+    "category": "CII",
+    "code": "Resolution MEPC.352(78)",
+    "description": "2022 Guidelines on operational carbon intensity indicators and the calculation methods (CII Guidelines, G1)",
+    "url": "https://drive.google.com/file/d/1ALusM4DraRuyk6nyzqAIQ1oLO5oxETw4/view?usp=sharing",
+    "createdAt": 0
+  },
+  {
+    "id": "res_seed_cii_2",
+    "category": "CII",
+    "code": "Resolution MEPC.353(78)",
+    "description": "2022 Guidelines on the reference lines for use with Operational Carbon Intensity Indicators (CII Reference Lines Guidelines, G2)",
+    "url": "https://drive.google.com/file/d/1ozdumHksSUhSV8bxR4dAnHAkJF7d8xox/view?usp=sharing",
+    "createdAt": 0
+  },
+  {
+    "id": "res_seed_cii_3",
+    "category": "CII",
+    "code": "Resolution MEPC.338(76)",
+    "description": "2021 Guidelines on the operational carbon intensity reduction factors relative to reference lines (CII Reduction Factor Guidelines, G3)",
+    "url": "https://drive.google.com/file/d/17g5VLikzh3a2L98waikbTOPC65CQ-lex/view?usp=sharing",
+    "createdAt": 0
+  },
+  {
+    "id": "res_seed_cii_4",
+    "category": "CII",
+    "code": "Resolution MEPC.354(78)",
+    "description": "2022 Guidelines on the operational carbon intensity rating of ships (CII Rating Guidelines, G4)",
+    "url": "https://drive.google.com/file/d/1yCdGgefgiHtwlmP8hHsGFqeGqjlJbnkM/view?usp=sharing",
+    "createdAt": 0
+  },
+  {
+    "id": "res_seed_cii_5",
+    "category": "CII",
+    "code": "Resolution MEPC.355(78)",
+    "description": "2022 Interim Guidelines on correction factors and voyage adjustments for CII calculations (CII Guidelines, G5)",
+    "url": "https://drive.google.com/file/d/1fWP0JpdofXtdeStY2Vr270Y55bKj8UUN/view?usp=sharing",
+    "createdAt": 0
+  },
+  {
+    "id": "res_seed_ets_1",
+    "category": "EU-ETS",
+    "code": "Directive 2003/87/EC",
+    "description": "(consolidated text) - Amended by Regulation (EU) 2023/959",
+    "url": "https://drive.google.com/file/d/1KS8xEOHzxzHl-laMnh-wGNKTSlwAsWDW/view?usp=sharing",
+    "createdAt": 0
+  },
+  {
+    "id": "res_seed_ets_2",
+    "category": "EU-ETS",
+    "code": "Delegated Regulation (EU) 2019/1122",
+    "description": "(Union Registry) - Amended by Regulation (EU) 2023/2904",
+    "url": "https://drive.google.com/file/d/1ZfWYyTCpSnE9gh__tESh2jYh4BEBe9Ub/view?usp=sharing",
+    "createdAt": 0
+  },
+  {
+    "id": "res_seed_ets_3",
+    "category": "EU-ETS",
+    "code": "Implementing Regulation (EU) 2023/2297",
+    "description": "The list of neighbouring container transshipment ports",
+    "url": "https://drive.google.com/file/d/12Y8I8yoL4BbrUljjIaDmKhEpDn_Z7nEB/view?usp=sharing",
+    "createdAt": 0
+  },
+  {
+    "id": "res_seed_ets_4",
+    "category": "EU-ETS",
+    "code": "Implementing Regulation (EU) 2023/2599",
+    "description": "The administration of shipping companies by administering authorities",
+    "url": "https://drive.google.com/file/d/1QZ0QOx90rJxYQ11hRVfGbAwF84fxamR5/view?usp=sharing",
+    "createdAt": 0
+  },
+  {
+    "id": "res_seed_ets_5",
+    "category": "EU-ETS",
+    "code": "Implementing Regulation (EU) 2023/2895",
+    "description": "The list of islands and ports, etc. Excluded from the scope of EU ETS",
+    "url": "https://drive.google.com/file/d/1I5sCiLuPGD-aoqRoRpTTvoQa8RLa3onP/view?usp=sharing",
+    "createdAt": 0
+  },
+  {
+    "id": "res_seed_fueleu_1",
+    "category": "FuelEU",
+    "code": "REGULATION (EU) 2023/1805",
+    "description": "OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 13 September 2023",
+    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32023R1805",
+    "createdAt": 0
+  }
+]

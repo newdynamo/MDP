@@ -22,10 +22,21 @@ const connectDB = async (uri) => {
     }
 };
 
+function isMongoConnected() {
+    return mongoose.connection && mongoose.connection.readyState === 1;
+}
+
+function getGridFSBucket() {
+    if (!isMongoConnected()) return null;
+    return new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'attachments' });
+}
+
 module.exports = {
     connectDB,
     User,
     Fleet,
     GlobalData,
-    mongoose
+    mongoose,
+    isMongoConnected,
+    getGridFSBucket
 };

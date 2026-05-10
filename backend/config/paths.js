@@ -17,5 +17,7 @@ module.exports = {
     ORDERS_FILE: path.join(DATA_DIR, 'orders.json'),
     TRADES_FILE: path.join(DATA_DIR, 'trades.json'),
     POOLS_FILE: path.join(DATA_DIR, 'pools.json'),
-    EMAIL_CONFIG_FILE: path.join(DATA_DIR, 'email_config.json')
+    EMAIL_CONFIG_FILE: path.join(DATA_DIR, 'email_config.json'),
+    RESOURCES_FILE: path.join(DATA_DIR, 'resources.json'),
+    POSTS_FILE: path.join(DATA_DIR, 'posts.json')
 };

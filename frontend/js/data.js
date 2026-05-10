@@ -240,3 +240,133 @@ class DataService {
 }
 
 const dataService = new DataService();
+
+class ResourceService {
+    async list() {
+        try {
+            const res = await fetch('/api/resources');
+            const data = await res.json();
+            return data.success ? data.resources : [];
+        } catch (e) {
+            console.error('Failed to fetch resources', e);
+            return [];
+        }
+    }
+
+    async add(resource) {
+        try {
+            const res = await fetch('/api/resources', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(resource)
+            });
+            return await res.json();
+        } catch (e) {
+            console.error('Failed to add resource', e);
+            return { success: false, message: 'Network error' };
+        }
+    }
+
+    async remove(id) {
+        try {
+            const res = await fetch(`/api/resources/${id}`, { method: 'DELETE' });
+            return await res.json();
+        } catch (e) {
+            console.error('Failed to delete resource', e);
+            return { success: false, message: 'Network error' };
+        }
+    }
+}
+
+const resourceService = new ResourceService();
+
+class BoardService {
+    async list() {
+        try {
+            const res = await fetch('/api/board/posts');
+            const data = await res.json();
+            return data.success ? data.posts : [];
+        } catch (e) {
+            console.error('Failed to fetch posts', e);
+            return [];
+        }
+    }
+
+    async get(id) {
+        try {
+            const res = await fetch(`/api/board/posts/${id}`);
+            const data = await res.json();
+            return data.success ? data.post : null;
+        } catch (e) {
+            console.error('Failed to fetch post', e);
+            return null;
+        }
+    }
+
+    async create(user, { title, body, files }) {
+        const fd = new FormData();
+        fd.append('title', title);
+        fd.append('body', body);
+        fd.append('authorId', user.id);
+        fd.append('authorEmail', user.email);
+        for (const f of (files || [])) fd.append('files', f);
+
+        try {
+            const res = await fetch('/api/board/posts', { method: 'POST', body: fd });
+            return await res.json();
+        } catch (e) {
+            console.error('Failed to create post', e);
+            return { success: false, message: 'Network error' };
+        }
+    }
+
+    async remove(user, id) {
+        try {
+            const res = await fetch(`/api/board/posts/${id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ requesterId: user.id, requesterEmail: user.email })
+            });
+            return await res.json();
+        } catch (e) {
+            console.error('Failed to delete post', e);
+            return { success: false, message: 'Network error' };
+        }
+    }
+
+    async reply(user, postId, { body, files }) {
+        const fd = new FormData();
+        fd.append('body', body);
+        fd.append('authorId', user.id);
+        fd.append('authorEmail', user.email);
+        for (const f of (files || [])) fd.append('files', f);
+
+        try {
+            const res = await fetch(`/api/board/posts/${postId}/replies`, { method: 'POST', body: fd });
+            return await res.json();
+        } catch (e) {
+            console.error('Failed to create reply', e);
+            return { success: false, message: 'Network error' };
+        }
+    }
+
+    async removeReply(user, postId, replyId) {
+        try {
+            const res = await fetch(`/api/board/posts/${postId}/replies/${replyId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ requesterId: user.id, requesterEmail: user.email })
+            });
+            return await res.json();
+        } catch (e) {
+            console.error('Failed to delete reply', e);
+            return { success: false, message: 'Network error' };
+        }
+    }
+
+    fileUrl(fileId) {
+        return `/api/board/files/${fileId}`;
+    }
+}
+
+const boardService = new BoardService();
